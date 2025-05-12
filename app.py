@@ -150,8 +150,11 @@ def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], st
     
     estrofe = []
     for _ in range(linhas):
-        linha = gerar_linha_poetica(tema)
-        estrofe.append(linha)
+        while True:
+            linha = gerar_linha_poetica(tema).capitalize()
+            if validar_linha(linha, estrofe):  # Verifica se a linha é única
+                estrofe.append(linha)
+                break
     return estrofe, tipo
 
 # Função para gerar estrofe modernizada
@@ -198,7 +201,7 @@ VERSO:\n{partes['verso']}\n\n
 REFRAO:\n{partes['refrao']}\n\n
 PONTE:\n{partes['ponte']}"""
     return banda_ref, acordes, letra_formatada, bpm
-    
+
 # Interface Gradio
 with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
     gr.Markdown("# 🤖🎸 **Assistente de Composição Musical**")
