@@ -151,66 +151,80 @@ TEMAS_LETRA = {
 # ========== GERADOR MUSICAL CORRIGIDO ==========
   
 def gerar_rima(palavra: str, silabas: int = 3) -> str:
-    sufixos = {
-        2: palavra[-2:],
-        3: palavra[-3:],
-        4: palavra[-4:]
-    }
-    return random.choice(DICIONARIO_RIMAS.get(sufixos[silabas], [palavra]))
+    """Gera rima baseada na última palavra do verso"""
+    ultima_palavra = palavra.split()[-1].lower()
+    for chave, rimas in DICIONARIO_RIMAS.items():
+        if chave in ultima_palavra:
+            return random.choice(rimas)
+    return f"{palavra}..."
 
 def validar_linha(nova_linha: str, linhas_existentes: list) -> bool:
+    """Valida linha evitando repetições excessivas"""
     palavras = nova_linha.split()
-    return not any(
-        palavras.count(palavra) > 2 for palavra in palavras
-    ) and nova_linha not in linhas_existentes
+    # Verifica repetição de palavras e linhas idênticas
+    return (
+        all(palavras.count(p) < 2 for p in palavras) and 
+        nova_linha not in linhas_existentes
+    )
 
 def gerar_estrofe_modernizada(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
-    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
-    esquema = random.choice(["ABAB", "AABA", "ABCD"])
+    """Gera estrofe com estrutura coerente"""
+    tema = TEMAS_DETALHADOS.get(subgenero)
+    esquema = random.choice(["ABAB", "AABA", "ABCB"])
     
     frases = []
-    ultimas_rimas = {}
+    rimas = {}
     
     for i in range(linhas):
-        # Gera linha baseada na estrutura poética
-        nova_linha = gerar_linha_poetica(tema)
-        
-        # Aplica sistema de rimas
-        if esquema in ["ABAB", "AABA"]:
-            if i in [0, 2] and esquema == "ABAB":
-                rima_alvo = ultimas_rimas.get(0, nova_linha.split()[-1])
-                nova_linha = gerar_rima(rima_alvo, silabas=3) + " " + nova_linha
-            elif i == 3 and esquema == "AABA":
-                nova_linha = gerar_rima(ultimas_rimas[0], silabas=3) + " " + nova_linha
-        
+        while True:
+            # Gera linha base combinando elementos temáticos
+            sujeito = random.choice(tema['nucleos'])
+            verbo = random.choice(tema['verbos'])
+            complemento = random.choice(tema['elementos'])
+            nova_linha = f"{sujeito} {verbo} {complemento}"
+            
+            # Aplica esquema de rimas
+            if esquema == "ABAB" and i % 2 == 0:
+                if i > 1:
+                    nova_linha += f" {gerar_rima(rimas[i%2])}"
+            elif esquema == "AABA" and i == 3:
+                nova_linha += f" {gerar_rima(rimas[0])}"
+            
+            if validar_linha(nova_linha, frases):
+                break
+                
         frases.append(nova_linha.capitalize())
-        ultimas_rimas[i] = nova_linha.split()[-1]
+        rimas[i] = nova_linha.split()[-1]
     
     return frases, esquema
 
 def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str]:
-    # Parte 1: Elementos estruturais
+    """Gera música completa com estrutura coerente"""
     partes = {}
-    estruturas = ["intro", "verso", "refrao", "ponte"]
+    esquema_geral = ""
     
-    for parte in estruturas:
-        linhas = 4 if parte != "refrao" else 6
-        frases, esquema = gerar_estrofe(subgenero, parte, linhas)
+    # Gera cada parte da música
+    for parte in ["intro", "verso", "refrao", "ponte"]:
+        linhas = 6 if parte == "refrao" else 4
+        frases, esquema = gerar_estrofe_modernizada(subgenero, parte, linhas)
         partes[parte] = "\n".join(frases)
+        esquema_geral = esquema  # Mantém último esquema para referência
     
-    # Parte 2: Elementos técnicos
-    banda_ref = random.choice(BANDAS_ICONICAS[subgenero])
-    acordes = " | ".join(random.sample(PROGRESSOES[subgenero], 3))
-    bpm = str(random.randint(80, 200)) + " BPM"
+    # Montagem final da letra
+    letra_formatada = (
+        f"INTRO ({esquema_geral}):\n{partes['intro']}\n\n"
+        f"VERSO:\n{partes['verso']}\n\n"
+        f"REFRAO:\n{partes['refrao']}\n\n"
+        f"PONTE:\n{partes['ponte']}"
+    )
     
-    # Parte 3: Montagem da letra
-    letra_formatada = f"""INTRO ({esquema}):\n{partes['intro']}\n\n
-VERSO:\n{partes['verso']}\n\n
-REFRAO:\n{partes['refrao']}\n\n
-PONTE:\n{partes['ponte']}"""
-    
-    return greet(nome), banda_ref, acordes, letra_formatada
-
+    # Elementos técnicos
+    return (
+        greet(nome),
+        random.choice(BANDAS_ICONICAS[subgenero]),
+        " | ".join(random.sample(PROGRESSOES[subgenero], 3)),
+        letra_formatada
+    )
 # ========== INTERFACE ATUALIZADA ==========
 with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
     gr.Markdown("# 🤖🎸 **Assistente de Composição Musical**")
