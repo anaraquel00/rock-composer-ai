@@ -31,39 +31,70 @@ ACORDES = {
 
 PROGRESSOES = {
     "Metal/Death Metal": [
-        "i-VII-VI", "i-VIIb-V", "i-VI-iv-V", "Phrygian Dominant",
-        "i-bII-i", "i-VI-VII-V"
+        {"progressao": "i-VII-VI", "emocoes": "sombrio, intenso", "caracteristicas": "riffs pesados, atmosfera obscura"},
+        {"progressao": "i-VIIb-V", "emocoes": "agressivo, caótico", "caracteristicas": "ritmos rápidos, dissonância"},
+        {"progressao": "i-VI-iv-V", "emocoes": "melancólico, épico", "caracteristicas": "melodias lentas, tensão crescente"},
+        {"progressao": "Phrygian Dominant", "emocoes": "exótico, ameaçador", "caracteristicas": "escalas orientais, intensidade"},
+        {"progressao": "i-bII-i", "emocoes": "opressor, sombrio", "caracteristicas": "mudanças abruptas, peso"},
+        {"progressao": "i-VI-VII-V", "emocoes": "épico, grandioso", "caracteristicas": "dinâmica crescente, solos técnicos"}
     ],
     "Metal/Power Metal": [
-        "I-V-vi-IV", "IV-V-I", "I-iii-IV-V", "vi-IV-I-V",
-        "I-VI-IV-V", "I-IV-V-vi"
+        {"progressao": "I-V-vi-IV", "emocoes": "heróico, otimista", "caracteristicas": "melodias épicas, coros"},
+        {"progressao": "IV-V-I", "emocoes": "triunfante, energético", "caracteristicas": "ritmos rápidos, refrões marcantes"},
+        {"progressao": "I-iii-IV-V", "emocoes": "emocionante, aventureiro", "caracteristicas": "harmonias ricas, solos"},
+        {"progressao": "vi-IV-I-V", "emocoes": "esperançoso, inspirador", "caracteristicas": "progressão fluida, melodia"},
+        {"progressao": "I-VI-IV-V", "emocoes": "épico, grandioso", "caracteristicas": "crescendos, coros"},
+        {"progressao": "I-IV-V-vi", "emocoes": "dinâmico, vibrante", "caracteristicas": "mudanças rápidas, energia"}
     ],
     "Punk/Hardcore": [
-        "I-IV-V", "I-V-vi-IV", "IV-V-I-IV", "Power chords",
-        "I-V-IV", "I-IV-I-V"
+        {"progressao": "I-IV-V", "emocoes": "rebelde, direto", "caracteristicas": "riffs simples, energia crua"},
+        {"progressao": "I-V-vi-IV", "emocoes": "intenso, emocional", "caracteristicas": "ritmos rápidos, letras diretas"},
+        {"progressao": "IV-V-I-IV", "emocoes": "agressivo, energético", "caracteristicas": "power chords, refrões"},
+        {"progressao": "Power chords", "emocoes": "cru, explosivo", "caracteristicas": "simples, impacto imediato"},
+        {"progressao": "I-V-IV", "emocoes": "urgente, intenso", "caracteristicas": "ritmos rápidos, simplicidade"},
+        {"progressao": "I-IV-I-V", "emocoes": "protesto, direto", "caracteristicas": "energia constante, repetição"}
     ],
     "Shoegaze": [
-        "I-iii-IV", "I-V-vi-iii", "IV-vi-I-V", "Maj7/add9",
-        "I-V-IV-iii", "ii-IV-I-V"
+        {"progressao": "I-iii-IV", "emocoes": "sonhador, introspectivo", "caracteristicas": "camadas de som, reverb"},
+        {"progressao": "I-V-vi-iii", "emocoes": "melancólico, etéreo", "caracteristicas": "harmonias suaves, atmosfera"},
+        {"progressao": "IV-vi-I-V", "emocoes": "calmo, reflexivo", "caracteristicas": "texturas densas, melodia"},
+        {"progressao": "Maj7/add9", "emocoes": "etéreo, flutuante", "caracteristicas": "acordes ricos, reverb"},
+        {"progressao": "I-V-IV-iii", "emocoes": "nostálgico, suave", "caracteristicas": "melodias lentas, harmonia"},
+        {"progressao": "ii-IV-I-V", "emocoes": "tranquilo, expansivo", "caracteristicas": "progressão fluida, atmosfera"}
     ],
     "Dream Rock": [
-        "ii-V-I", "IV-I-V-vi", "I-vi-IV-V", "ii-IV-I-V",
-        "I-V-vi-IV", "IV-ii-I-V"
+        {"progressao": "ii-V-I", "emocoes": "suave, relaxante", "caracteristicas": "melodias limpas, harmonia"},
+        {"progressao": "IV-I-V-vi", "emocoes": "sonhador, introspectivo", "caracteristicas": "texturas suaves, melodia"},
+        {"progressao": "I-vi-IV-V", "emocoes": "esperançoso, emocional", "caracteristicas": "progressão fluida, harmonia"},
+        {"progressao": "ii-IV-I-V", "emocoes": "calmo, expansivo", "caracteristicas": "melodias suaves, atmosfera"},
+        {"progressao": "I-V-vi-IV", "emocoes": "nostálgico, inspirador", "caracteristicas": "harmonias ricas, melodia"},
+        {"progressao": "IV-ii-I-V", "emocoes": "etéreo, introspectivo", "caracteristicas": "texturas densas, reverb"}
     ],
     "Alternative Rock": [
-        "I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV",
-        "ii-V-I", "I-IV-ii-V"
+        {"progressao": "I-IV-V", "emocoes": "energético, cativante", "caracteristicas": "riffs marcantes, refrões"},
+        {"progressao": "I-vi-IV-V", "emocoes": "emocional, dinâmico", "caracteristicas": "mudanças de tom, melodia"},
+        {"progressao": "IV-I-V-vi", "emocoes": "introspectivo, vibrante", "caracteristicas": "harmonias ricas, energia"},
+        {"progressao": "I-V-vi-IV", "emocoes": "esperançoso, emocional", "caracteristicas": "progressão fluida, melodia"},
+        {"progressao": "ii-V-I", "emocoes": "suave, reflexivo", "caracteristicas": "melodias limpas, harmonia"},
+        {"progressao": "I-IV-ii-V", "emocoes": "dinâmico, cativante", "caracteristicas": "mudanças rápidas, energia"}
     ],
     "Indie Rock": [
-        "I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV",
-        "ii-IV-I-V", "I-V-IV-vi"
+        {"progressao": "I-IV-V", "emocoes": "nostálgico, cativante", "caracteristicas": "riffs simples, melodia"},
+        {"progressao": "I-vi-IV-V", "emocoes": "emocional, introspectivo", "caracteristicas": "harmonias suaves, melodia"},
+        {"progressao": "IV-I-V-vi", "emocoes": "sonhador, suave", "caracteristicas": "texturas limpas, reverb"},
+        {"progressao": "I-V-vi-IV", "emocoes": "esperançoso, vibrante", "caracteristicas": "progressão fluida, energia"},
+        {"progressao": "ii-IV-I-V", "emocoes": "calmo, introspectivo", "caracteristicas": "melodias suaves, harmonia"},
+        {"progressao": "I-V-IV-vi", "emocoes": "etéreo, reflexivo", "caracteristicas": "texturas densas, melodia"}
     ],
     "Post-Rock": [
-        "I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV",
-        "ii-V-I", "I-IV-ii-V"
+        {"progressao": "I-IV-V", "emocoes": "épico, expansivo", "caracteristicas": "crescendo lento, camadas"},
+        {"progressao": "I-vi-IV-V", "emocoes": "melancólico, introspectivo", "caracteristicas": "texturas densas, melodia"},
+        {"progressao": "IV-I-V-vi", "emocoes": "sonhador, etéreo", "caracteristicas": "harmonias suaves, reverb"},
+        {"progressao": "I-V-vi-IV", "emocoes": "esperançoso, emocional", "caracteristicas": "progressão fluida, melodia"},
+        {"progressao": "ii-V-I", "emocoes": "calmo, reflexivo", "caracteristicas": "melodias limpas, harmonia"},
+        {"progressao": "I-IV-ii-V", "emocoes": "dinâmico, expansivo", "caracteristicas": "crescendo, texturas"}
     ]
 }
-
 
 # ========== TEMAS DE LETRA ATUALIZADOS ==========
 # Temas de letra para cada subgênero musical
