@@ -149,22 +149,45 @@ TEMAS_LETRA = {
 }
 
 # ========== GERADOR MUSICAL CORRIGIDO ==========
-def gerar_rima(palavra: str, silabas: int = 2) -> str:
-    sufixo = palavra.lower()[-silabas:]
-    return random.choice(DICIONARIO_RIMAS.get(sufixo, [f"{palavra}..."]))
+def gerar_linha_poetica(tema: dict) -> str:
+    """Gera uma linha usando estrutura sujeito-verbo-complemento"""
+    return f"{random.choice(tema['nucleos'])} {random.choice(tema['acoes'])} {random.choice(tema['elementos'])}"
 
-def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
-    temas = TEMAS_LETRA.get(subgenero, ["abstrato"])
-    esquema = random.choice(["ABAB", "AABB", "ABCB"])
+def gerar_rima(palavra: str, silabas: int = 3) -> str:
+    sufixos = {
+        2: palavra[-2:],
+        3: palavra[-3:],
+        4: palavra[-4:]
+    }
+    return random.choice(DICIONARIO_RIMAS.get(sufixos[silabas], [palavra]))
+
+def validar_linha(nova_linha: str, linhas_existentes: list) -> bool:
+    palavras = nova_linha.split()
+    return not any(
+        palavras.count(palavra) > 2 for palavra in palavras
+    ) and nova_linha not in linhas_existentes
+
+def gerar_estrofe_modernizada(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
+    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
+    esquema = random.choice(["ABAB", "AABA", "ABCD"])
     
     frases = []
+    ultimas_rimas = {}
+    
     for i in range(linhas):
-        base = random.choice(temas)
-        if i > 0 and esquema in ["ABAB", "AABB"]:
-            if (esquema == "ABAB" and i % 2 == 1) or (esquema == "AABB" and i % 2 == 0):
-                frases.append(gerar_rima(frases[-1]))
-                continue
-        frases.append(f"{base} {random.choice(['sombrio', 'épico', 'etéreo'])}")
+        # Gera linha baseada na estrutura poética
+        nova_linha = gerar_linha_poetica(tema)
+        
+        # Aplica sistema de rimas
+        if esquema in ["ABAB", "AABA"]:
+            if i in [0, 2] and esquema == "ABAB":
+                rima_alvo = ultimas_rimas.get(0, nova_linha.split()[-1])
+                nova_linha = gerar_rima(rima_alvo, silabas=3) + " " + nova_linha
+            elif i == 3 and esquema == "AABA":
+                nova_linha = gerar_rima(ultimas_rimas[0], silabas=3) + " " + nova_linha
+        
+        frases.append(nova_linha.capitalize())
+        ultimas_rimas[i] = nova_linha.split()[-1]
     
     return frases, esquema
 
