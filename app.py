@@ -115,7 +115,7 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
         linhas = 4 if parte != "refrao" else 6
         frases, esquema = gerar_estrofe(subgenero, parte, linhas)
         descricao = instrucoes.get(parte, "Descrição não disponível")
-        partes[parte] = f"[{parte.upper()}: {descricao}]\n" + "\n".join(frases)
+        partes[parte] = f"[{descricao}]\n" + "\n".join(frases)
         esquemas[parte] = esquema
     banda_ref = random.choice(BANDAS_ICONICAS.get(subgenero, ["Banda Desconhecida"]))
     acordes = " | ".join(random.sample(PROGRESSOES.get(subgenero, ["I-IV-V"]), 3))
