@@ -152,6 +152,10 @@ TEMAS_LETRA = {
 }
 
 # ========== GERADOR MUSICAL CORRIGIDO ==========
+import gradio as gr  # type: ignore
+import random
+from typing import Dict, List, Tuple
+
 # Função auxiliar para gerar linha poética
 def gerar_linha_poetica(tema: Dict[str, List[str]]) -> str:
     nucleos = random.choice(tema.get("nucleos", []))
@@ -179,8 +183,7 @@ def validar_linha(nova_linha: str, linhas_existentes: list) -> bool:
 
 # Função para gerar estrofe
 def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
-    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Death Metal, Metal/Power Metal, Punk/Hardcore," \
-    " Shoegaze, Dream Rock, Alternative Rock, Indie Rock, Post-Rock"])
+    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
     estrofe = []
     for _ in range(linhas):
         linha = gerar_linha_poetica(tema)
@@ -189,8 +192,7 @@ def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], st
 
 # Função para gerar estrofe modernizada
 def gerar_estrofe_modernizada(subgenero: str, linhas: int) -> Tuple[List[str], str]:
-    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS ["Alternative Rock, Metal/Death Metal," \
-    " Metal/Power Metal, Punk/Hardcore, Shoegaze, Dream Rock, Indie Rock, Post-Rock"])
+    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
     esquema = random.choice(["ABAB", "AABA", "ABCD"])
     frases = []
     ultimas_rimas = {}
@@ -233,10 +235,7 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
         subgenero = gr.Dropdown(
             label="Estilo Musical",
             choices=list(BANDAS_ICONICAS.keys()),
-            value="Metal/Death Metal, Metal/Power Metal, Punk/Hardcore, Shoegaze, Dream Rock, Alternative Rock, Indie Rock, Post-Rock",
-            multiselect=True,
-            max_choices=3,
-            type="value"
+            value="Metal/Power Metal"
         )
     btn = gr.Button("Criar Música", variant="primary")
     with gr.Column():
