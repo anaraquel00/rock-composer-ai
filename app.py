@@ -228,8 +228,8 @@ PONTE:\n{partes['ponte']}"""
 
 
 # Interface Gradio
-with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
-    gr.Markdown("# 🤖🎸 **Assistente de Composição Musical**")
+with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue")) as app:
+    gr.Markdown("# 🤖🎸 **Jo Cyborg - IA Compositora**")
     with gr.Row():
         nome = gr.Textbox(label="Seu Nome", value="Raquel")
         subgenero = gr.Dropdown(
@@ -247,5 +247,5 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
         inputs=[nome, subgenero],
         outputs=[referencia, acordes, letra, letra_banda]
     )
-app.launch()
+ app.launch()
 
