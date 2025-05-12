@@ -174,9 +174,11 @@ def gerar_estrofe_modernizada(subgenero: str, linhas: int) -> Tuple[List[str], s
 
 # Função para gerar música completa
 def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str]:
+    print(f"Gerando música para o subgênero: {subgenero}")
     partes = {}
     esquemas = {}
     instrucoes = INSTRUCOES_ESTILISTICAS.get(subgenero, {})
+    print(f"Instruções estilísticas carregadas: {instrucoes}")
     estruturas = ["intro", "verso", "refrao", "ponte"]
     for parte in estruturas:
         linhas = 4 if parte != "refrao" else 6
@@ -185,14 +187,18 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
         partes[parte] = f"[{descricao}]\n" + "\n".join(frases)
         esquemas[parte] = esquema
     banda_ref = random.choice(BANDAS_ICONICAS.get(subgenero, ["Banda Desconhecida"]))
-    acordes = " | ".join(random.sample(PROGRESSOES.get(subgenero, ["I-IV-V"]), 3))
+    print(f"Banda referência: {banda_ref}")
+    acordes = " | ".join(random.sample(
+        [p["progressao"] for p in PROGRESSOES.get(subgenero, PROGRESSOES["Metal/Power Metal"])],
+        3
+    ))
     bpm = str(random.randint(80, 200)) + " BPM"
     letra_formatada = f"""INTRO:\n{partes['intro']}\n\n
 VERSO:\n{partes['verso']}\n\n
 REFRAO:\n{partes['refrao']}\n\n
 PONTE:\n{partes['ponte']}"""
     return banda_ref, acordes, letra_formatada, bpm
-
+    
 # Interface Gradio
 with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
     gr.Markdown("# 🤖🎸 **Assistente de Composição Musical**")
