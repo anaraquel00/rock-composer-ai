@@ -90,7 +90,7 @@ TEMAS_DETALHADOS = {
             "ruas em chamas",
             "sombras da opressão"
         ],
-        "verbos": [
+        "acoes": [
             "grita contra a injustiça",
             "desafia o sistema",
             "rompe as correntes",
@@ -98,7 +98,7 @@ TEMAS_DETALHADOS = {
             "rompe as barreiras",
             "constrói um novo amanhã"
         ],
-        "complementos": [
+        "elementos": [
             "sistema opressor",
             "corrupção governamental",
             "luta pela verdade",
@@ -109,31 +109,29 @@ TEMAS_DETALHADOS = {
     },
     "Shoegaze": {
         "nucleos": ["memórias vivas", "sonhos perdidos", "natureza efêmera", "silêncio profundo"],
-        "verbos": ["flutua em lagrimas", "desvanece em mente", "abraça me forte", "perde a consciência"],
-        "complementos": ["eterno amor", "infinito ao voar", "transcendente em brilho", "etéreo em luz"]
+        "acoes": ["flutua em lágrimas", "desvanece em mente", "abraça-me forte", "perde a consciência"],
+        "elementos": ["eterno amor", "infinito ao voar", "transcendente em brilho", "etéreo em luz"]
     },
     "Dream Rock": {
         "nucleos": ["mistério da noite", "tranquilidade ao luar", "reflexão silenciosa", "sonhos profundos"],
-        "verbos": ["dança nas estrelas", "sussurra alto", "me abraça", "persegue meu ego"],
-        "complementos": ["luz em minha cor", "sombras escuras", "universo paralelo", "tempo perdido"] 
+        "acoes": ["dança nas estrelas", "sussurra alto", "me abraça", "persegue meu ego"],
+        "elementos": ["luz em minha cor", "sombras escuras", "universo paralelo", "tempo perdido"]
     },
     "Alternative Rock": {
         "nucleos": ["rebelião desenfreada", "protesto sem graça", "sociedade corrompida", "liberdade de escolhas"],
-        "verbos": ["grita alto", "desafia o sistema", "rompe barreiras", "constrói pontes"],
-        "complementos": ["sistema sitiado", "corrupção generalizada", "opressão controlada", "futuro sombrio"]
+        "acoes": ["grita alto", "desafia o sistema", "rompe barreiras", "constrói pontes"],
+        "elementos": ["sistema sitiado", "corrupção generalizada", "opressão controlada", "futuro sombrio"]
     },
     "Indie Rock": {
         "nucleos": ["memórias vivas", "sonhos sem nexo", "natureza morta", "silêncio abafado"],
-        "verbos": ["flutua alto", "desvanece devagar", "abraça meus contos", "perde consciência"],
-        "complementos": ["eterno viver", "infinito calmo", "transcendente luar", "etéreo em cruz"]
+        "acoes": ["flutua alto", "desvanece devagar", "abraça meus contos", "perde consciência"],
+        "elementos": ["eterno viver", "infinito calmo", "transcendente luar", "etéreo em cruz"]
     },
     "Post-Rock": {
         "nucleos": ["mistério do tempo", "tranquilidade duvidada", "reflexão às avessas", "sonhos loucos"],
-        "verbos": ["dança pra mim", "sussurra devagar", "abraça meu ar", "persegue meu ser"],
-        "complementos": ["luz nas sombras", "sombras vazias", "universo cosmico", "tempo passado"]
+        "acoes": ["dança pra mim", "sussurra devagar", "abraça meu ar", "persegue meu ser"],
+        "elementos": ["luz nas sombras", "sombras vazias", "universo cósmico", "tempo passado"]
     }
-
-
 }
 # ========== TEMAS DE LETRA ATUALIZADOS ==========
 # Temas de letra para cada subgênero musical
@@ -152,7 +150,6 @@ TEMAS_LETRA = {
 }
 
 # ========== GERADOR MUSICAL CORRIGIDO ==========
-
 # Função auxiliar para gerar linha poética
 def gerar_linha_poetica(tema: Dict[str, List[str]]) -> str:
     nucleos = random.choice(tema.get("nucleos", []))
