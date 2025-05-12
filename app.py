@@ -61,39 +61,73 @@ DICIONARIO_RIMAS = {
 
 TEMAS_DETALHADOS = {
     "Metal/Power Metal": {
-        "nucleos": ["Cavaleiro", "Dragão", "Espada", "Profecia"],
-        "verbos": ["ergue", "cruza", "desafia", "convoca"],
-        "complementos": ["estelar", "cósmico", "ancestral", "eterno"]
+        "nucleos": [
+            "Cavaleiro das estrelas",
+            "Dragão de ébano",
+            "Espada ancestral",
+            "Profecia celestial"
+        ],
+        "acoes": [
+            "ergue o lábaro",
+            "cruza o horizonte",
+            "desafia o crepúsculo",
+            "convoca os eleitos"
+        ],
+        "elementos": [
+            "sob a lua rubra",
+            "entre relâmpagos cósmicos",
+            "no altar dos deuses antigos",
+            "pelas veredas do destino"
+        ]
     },
     "Punk/Hardcore": {
-        "nucleos": ["rebelião", "protesto", "sociedade", "liberdade"],
-        "verbos": ["grita", "desafia", "rompe", "constrói"],
-        "complementos": ["sistema", "corrupção", "opressão", "futuro"]
+        "nucleos": [
+            "rebelião urbana",
+            "gritos de liberdade",
+            "ruas em chamas",
+            "sombras da opressão"
+        ],
+        "verbos": [
+            "grita contra a injustiça",
+            "desafia o sistema",
+            "rompe as correntes",
+            "constrói um novo amanhã"
+            "rompe as barreiras",
+            "constrói um novo amanhã"
+        ],
+        "complementos": [
+            "sistema opressor",
+            "corrupção governamental",
+            "luta pela verdade",
+            "opressão social",
+            "futuro incerto",
+            "solidão na multidão"
+        ]
     },
     "Shoegaze": {
-        "nucleos": ["memórias", "sonhos", "natureza", "silêncio"],
-        "verbos": ["flutua", "desvanece", "abraça", "perde"],
-        "complementos": ["eterno", "infinito", "transcendente", "etéreo"]
+        "nucleos": ["memórias vivas", "sonhos perdidos", "natureza efêmera", "silêncio profundo"],
+        "verbos": ["flutua em lagrimas", "desvanece em mente", "abraça me forte", "perde a consciência"],
+        "complementos": ["eterno amor", "infinito ao voar", "transcendente em brilho", "etéreo em luz"]
     },
     "Dream Rock": {
-        "nucleos": ["mistério", "tranquilidade", "reflexão", "sonhos"],
-        "verbos": ["dança", "sussurra", "abraça", "persegue"],
-        "complementos": ["luz", "sombras", "universo", "tempo"] 
+        "nucleos": ["mistério da noite", "tranquilidade ao luar", "reflexão silenciosa", "sonhos profundos"],
+        "verbos": ["dança nas estrelas", "sussurra alto", "me abraça", "persegue meu ego"],
+        "complementos": ["luz em minha cor", "sombras escuras", "universo paralelo", "tempo perdido"] 
     },
     "Alternative Rock": {
-        "nucleos": ["rebelião", "protesto", "sociedade", "liberdade"],
-        "verbos": ["grita", "desafia", "rompe", "constrói"],
-        "complementos": ["sistema", "corrupção", "opressão", "futuro"]
+        "nucleos": ["rebelião desenfreada", "protesto sem graça", "sociedade corrompida", "liberdade de escolhas"],
+        "verbos": ["grita alto", "desafia o sistema", "rompe barreiras", "constrói pontes"],
+        "complementos": ["sistema sitiado", "corrupção generalizada", "opressão controlada", "futuro sombrio"]
     },
     "Indie Rock": {
-        "nucleos": ["memórias", "sonhos", "natureza", "silêncio"],
-        "verbos": ["flutua", "desvanece", "abraça", "perde"],
-        "complementos": ["eterno", "infinito", "transcendente", "etéreo"]
+        "nucleos": ["memórias vivas", "sonhos sem nexo", "natureza morta", "silêncio abafado"],
+        "verbos": ["flutua alto", "desvanece devagar", "abraça meus contos", "perde consciência"],
+        "complementos": ["eterno viver", "infinito calmo", "transcendente luar", "etéreo em cruz"]
     },
     "Post-Rock": {
-        "nucleos": ["mistério", "tranquilidade", "reflexão", "sonhos"],
-        "verbos": ["dança", "sussurra", "abraça", "persegue"],
-        "complementos": ["luz", "sombras", "universo", "tempo"]
+        "nucleos": ["mistério do tempo", "tranquilidade duvidada", "reflexão às avessas", "sonhos loucos"],
+        "verbos": ["dança pra mim", "sussurra devagar", "abraça meu ar", "persegue meu ser"],
+        "complementos": ["luz nas sombras", "sombras vazias", "universo cosmico", "tempo passado"]
     }
 
 
