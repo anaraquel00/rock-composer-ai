@@ -28,16 +28,42 @@ ACORDES = {
     "Post-Rock": ["Cmaj", "Gmaj", "Dmaj", "Amin", "Emin"]
 }
 
+
 PROGRESSOES = {
-    "Metal/Death Metal": ["i-VII-VI", "i-VIIb-V", "Trítonos", "i-VI-iv-V", "Phrygian Dominant"],
-    "Metal/Power Metal": ["I-V-vi-IV", "IV-V-I", "Harmônicos", "I-iii-IV-V", "vi-IV-I-V"],
-    "Punk/Hardcore": ["I-IV-V", "Power chords", "Palm mute", "I-V-vi-IV", "IV-V-I-IV"],
-    "Shoegaze": ["I-iii-IV", "Maj7/add9", "Wall of Sound", "I-V-vi-iii", "IV-vi-I-V"],
-    "Dream Rock": ["ii-V-I", "IV-I-V-vi", "Sustained chords", "I-vi-IV-V", "ii-IV-I-V"],
-    "Alternative Rock": ["I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV", "ii-V-I"],
-    "Indie Rock": ["I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV", "ii-V-I"],
-    "Post-Rock": ["I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV", "ii-V-I"]
+    "Metal/Death Metal": [
+        "i-VII-VI", "i-VIIb-V", "i-VI-iv-V", "Phrygian Dominant",
+        "i-bII-i", "i-VI-VII-V"
+    ],
+    "Metal/Power Metal": [
+        "I-V-vi-IV", "IV-V-I", "I-iii-IV-V", "vi-IV-I-V",
+        "I-VI-IV-V", "I-IV-V-vi"
+    ],
+    "Punk/Hardcore": [
+        "I-IV-V", "I-V-vi-IV", "IV-V-I-IV", "Power chords",
+        "I-V-IV", "I-IV-I-V"
+    ],
+    "Shoegaze": [
+        "I-iii-IV", "I-V-vi-iii", "IV-vi-I-V", "Maj7/add9",
+        "I-V-IV-iii", "ii-IV-I-V"
+    ],
+    "Dream Rock": [
+        "ii-V-I", "IV-I-V-vi", "I-vi-IV-V", "ii-IV-I-V",
+        "I-V-vi-IV", "IV-ii-I-V"
+    ],
+    "Alternative Rock": [
+        "I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV",
+        "ii-V-I", "I-IV-ii-V"
+    ],
+    "Indie Rock": [
+        "I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV",
+        "ii-IV-I-V", "I-V-IV-vi"
+    ],
+    "Post-Rock": [
+        "I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV",
+        "ii-V-I", "I-IV-ii-V"
+    ]
 }
+
 
 # ========== TEMAS DE LETRA ATUALIZADOS ==========
 # Temas de letra para cada subgênero musical
