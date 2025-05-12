@@ -91,7 +91,7 @@ TEMAS_DETALHADOS = {
             "grita contra a injustiça",
             "desafia o sistema",
             "rompe as correntes",
-            "constrói um novo amanhã"
+            "constrói um novo amanhã",
             "rompe as barreiras",
             "constrói um novo amanhã"
         ],
@@ -150,8 +150,16 @@ TEMAS_LETRA = {
 
 # ========== GERADOR MUSICAL CORRIGIDO ==========
 def gerar_linha_poetica(tema: dict) -> str:
-    """Gera uma linha usando estrutura sujeito-verbo-complemento"""
-    return f"{random.choice(tema['nucleos'])} {random.choice(tema['acoes'])} {random.choice(tema['elementos'])}"
+   return f"{random.choice(tema['nucleos'])} {random.choice(tema['verbos'])} {random.choice(tema['complementos'])}"   
+def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
+    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
+    estrofe = []
+    
+    for _ in range(linhas):
+        linha = gerar_linha_poetica(tema)
+        estrofe.append(linha)
+    
+    return estrofe, tipo
 
 def gerar_rima(palavra: str, silabas: int = 3) -> str:
     sufixos = {
