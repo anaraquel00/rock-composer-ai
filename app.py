@@ -57,7 +57,7 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Dict[str, str]:
         "intro": gerar_estrofe(subgenero, "intro", 4),
         "verso": gerar_estrofe(subgenero, "verso", 4),
         "refrao": gerar_estrofe(subgenero, "refrao", 6),
-        "ponte": gerar_estrofe(subgenero, "ponte", 2)
+        "ponte": gerar_estrofe(subgenero, "ponte", 4)
     }
     
     # Parte 3: Elementos técnicos
