@@ -1,106 +1,101 @@
 import gradio as gr
 import random
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
-# ========== SISTEMA DE SAUDAÇÃO ==========
-def greet(name: str) -> str:
-    return f"🎸 Olá {name}! Eu sou seu assistente de composição musical. Vamos criar algo épico hoje?"
-
-# ========== BANCO DE DADOS MUSICAL ==========
-BANDAS_ICONICAS = {
-    "Metal/Death Metal": ["Cannibal Corpse", "Morbid Angel", "Death"],
-    "Metal/Power Metal": ["Helloween", "Blind Guardian", "DragonForce"],
-    "Punk/Hardcore": ["Bad Brains", "Black Flag", "Dead Kennedys"],
-    "Shoegaze": ["My Bloody Valentine", "Slowdive", "Ride"],
-    "Dream Rock": ["Beach House", "Mazzy Star", "Cocteau Twins"]
+# ========== BANCO DE DADOS ==========
+FRASES_POR_ESTILO = {
+    "Punk": {
+        "verso": [
+            "A cidade está podre e ninguém se importa!",
+            "Gritos ecoam mas ninguém escuta",
+            "Quebramos as regras só por existir",
+            "O sistema caiu e ninguém viu"
+        ],
+        "refrao": [
+            "ISSO NÃO É UMA FASE! (x3)",
+            "Queimem tudo até o chão!",
+            "Não somos sua diversão!",
+            "O futuro é nosso também!",
+            "Nada vai nos calar!",
+            "REVOLTA É A SOLUÇÃO!"
+        ]
+    },
+    "Shoegaze": {
+        "verso": [
+            "Nuvens de algodão cobrem o sol da tarde",
+            "Seu nome ecoa em câmera lenta",
+            "O ar cheira a chuva e transistor",
+            "Todos os relógios pararam às 4h"
+        ],
+        "ponte": [
+            "O verão dissolveu em químicos",
+            "Seus olhos são dois eclipses",
+            "Respire fundo antes de mergulhar",
+            "O vazio tem um som tão doce"
+        ]
+    }
 }
 
-PROGRESSOES = {
-    "Metal/Death Metal": ["i-VII-VI", "i-VIIb-V", "Trítonos"],
-    "Metal/Power Metal": ["I-V-vi-IV", "IV-V-I", "Harmônicos"],
-    "Punk/Hardcore": ["I-IV-V", "Power chords", "Palm mute"],
-    "Shoegaze": ["I-iii-IV", "Maj7/add9", "Wall of Sound"],
-    "Dream Rock": ["ii-V-I", "IV-I-V-vi", "Sustained chords"]
-}
-
-DICIONARIO_RIMAS = {
-    "ação": ["destruição", "perdição", "canção"],
-    "dor": ["amor", "tambor", "flor"],
-    "noite": ["foice", "estoque", "arroite"]
-}
-
-# ========== GERADOR MUSICAL ==========
-def gerar_rima(palavra: str) -> str:
-    return random.choice(DICIONARIO_RIMAS.get(palavra[-3:], [f"{palavra} (sem rima)"]))
-
-def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> List[str]:
-    temas = BANDAS_ICONICAS.get(subgenero, ["rock"])
-    esquema = "ABAB" if "Death" in subgenero else "AABB"
-    
+# ========== GERADOR DE PARTES ==========
+def gerar_partes(tipo: str, estilo: str, num_frases: int) -> str:
+    """Gera uma parte da música com número exato de frases"""
     frases = []
-    for i in range(linhas):
-        frase = f"{random.choice(temas)} {random.choice(['sombrio', 'épico', 'etéreo'])}"
-        if i % 2 == 1 and esquema == "ABAB":
-            frase = gerar_rima(frases[i-1])
-        elif i % 2 == 1 and esquema == "AABB":
-            frase = gerar_rima(frases[i-1])
-        frases.append(frase)
+    base = FRASES_POR_ESTILO.get(estilo, {}).get(tipo, [])
     
-    return frases
+    for _ in range(num_frases):
+        if base:
+            frases.append(random.choice(base))
+        else:
+            # Fallback criativo
+            frases.append(f"[FRASE {tipo.upper()} DO {estilo.upper()}]")
+    
+    return "\n".join(frases)
 
-def gerar_musica_completa(nome: str, subgenero: str) -> Dict[str, str]:
-    # Parte 1: Saudação
-    saudacao = greet(nome)
+# ========== GERADOR COMPLETO ==========
+def gerar_letra_estruturada(tema: str, estilo: str) -> Dict[str, str]:
+    part_names = ["intro", "verso1", "refrao", "ponte", "outro"]
     
-    # Parte 2: Letra
     partes = {
-        "intro": gerar_estrofe(subgenero, "intro", 4),
-        "verso": gerar_estrofe(subgenero, "verso", 4),
-        "refrao": gerar_estrofe(subgenero, "refrao", 6),
-        "ponte": gerar_estrofe(subgenero, "ponte", 4)
+        "intro": gerar_partes("intro", estilo, 4),
+        "verso1": gerar_partes("verso", estilo, 4),
+        "refrao": gerar_partes("refrao", estilo, 6),
+        "verso2": gerar_partes("verso", estilo, 4),
+        "ponte": gerar_partes("ponte", estilo, 4),
+        "outro": gerar_partes("outro", estilo, 4)
     }
     
-    # Parte 3: Elementos técnicos
-    banda_ref = random.choice(BANDAS_ICONICAS.get(subgenero, ["Artista Desconhecido"]))
-    acordes = " | ".join(PROGRESSOES.get(subgenero, ["I-IV-V"]))
-    
     return {
-        "BPM": dados.get("tempo", "120 BPM"),
-        "Letra": f"""INTRO ({esquema}):\n{"\n".join(partes['intro'])}\n\n
-VERSO:\n{"\n".join(partes['verso'])}\n\n
-REFRAO:\n{"\n".join(partes['refrao'])}"""
+        "Título": f"{tema} ({estilo})",
+        "Letra": f"""INTRO:\n{partes['intro']}\n\n
+VERSO 1:\n{partes['verso1']}\n\n
+REFRAO:\n{partes['refrao']}\n\n
+VERSO 2:\n{partes['verso2']}\n\n
+PONTE:\n{partes['ponte']}\n\n
+OUTRO:\n{partes['outro']}"""
     }
 
 # ========== INTERFACE ==========
-with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
-    gr.Markdown("# 🤖🎸 **Assistente de Composição Musical**")
+with gr.Blocks(title="Gerador de Letras Profissional") as app:
+    gr.Markdown("# 🎤 **Gerador de Letras Estruturadas**")
     
     with gr.Row():
-        nome = gr.Textbox(label="Seu Nome", value="Raquel")
-        subgenero = gr.Dropdown(
-            label="Estilo Musical",
-            choices=[
-                "Metal/Death Metal",
-                "Metal/Power Metal",
-                "Punk/Hardcore",
-                "Shoegaze",
-                "Dream Rock"
-            ],
-            value="Metal/Power Metal"
+        tema = gr.Textbox(label="Tema Principal", value="amor em tempos de caos")
+        estilo = gr.Dropdown(
+            label="Estilo Musical", 
+            choices=["Punk", "Metal", "Grunge", "Shoegaze", "Dream Rock"],
+            value="Punk"
         )
     
-    btn = gr.Button("Criar Música", variant="primary")
+    btn = gr.Button("Gerar Letra", variant="primary")
     
-    with gr.Column():
-        saudacao = gr.Textbox(label="Mensagem")
-        referencia = gr.Textbox(label="Banda Referência")
-        acordes = gr.Textbox(label="Progressão de Acordes")
-        letra = gr.Textbox(label="Letra Completa", lines=15)
+    with gr.Row():
+        titulo = gr.Textbox(label="Título")
+        letra = gr.Textbox(label="Letra Completa", lines=20)
     
     btn.click(
-        fn=gerar_musica_completa,
-        inputs=[nome, subgenero],
-        outputs=[saudacao, referencia, acordes, letra]
+        fn=gerar_letra_estruturada,
+        inputs=[tema, estilo],
+        outputs=[titulo, letra]
     )
 
 app.launch()
