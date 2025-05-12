@@ -1,6 +1,11 @@
-import gradio as gr # type: ignore
+import gradio as gr
 import random
 from typing import Dict, List, Tuple
+
+# ========== SISTEMA DE SAUDAÇÃO ATUALIZADO ==========
+def greet(name: str) -> str:
+    saudacoes = ["🎸 Olá", "🤘 Saudações", "🎤 Bem-vindo"]
+    return f"{random.choice(saudacoes)} {name}! Vamos compor algo épico hoje?"
 
 # ========== BANCO DE DADOS MUSICAL COMPLETO ==========
 BANDAS_ICONICAS = {
@@ -8,189 +13,50 @@ BANDAS_ICONICAS = {
     "Metal/Power Metal": ["Helloween", "Blind Guardian", "DragonForce"],
     "Punk/Hardcore": ["Bad Brains", "Black Flag", "Dead Kennedys"],
     "Shoegaze": ["My Bloody Valentine", "Slowdive", "Ride"],
-    "Dream Rock": ["Beach House", "Mazzy Star", "Cocteau Twins"],
-    "Alternative Rock": ["Radiohead", "Nirvana", "The Smashing Pumpkins"],
-    "Indie Rock": ["Arctic Monkeys", "Vampire Weekend", "Tame Impala"],
-    "Post-Rock": ["Explosions in the Sky", "Godspeed You! Black Emperor", "Sigur Rós"]
-}
-
-ACORDES = {
+    "Dream Rock": ["Beach House", "Mazzy Star", "Cocteau Twins"]
 }
 
 PROGRESSOES = {
-    "Metal/Death Metal": ["i-VII-VI", "i-VIIb-V", "Trítonos", "i-VI-iv-V", "Phrygian Dominant"],
-    "Metal/Power Metal": ["I-V-vi-IV", "IV-V-I", "Harmônicos", "I-iii-IV-V", "vi-IV-I-V"],
-    "Punk/Hardcore": ["I-IV-V", "Power chords", "Palm mute", "I-V-vi-IV", "IV-V-I-IV"],
-    "Shoegaze": ["I-iii-IV", "Maj7/add9", "Wall of Sound", "I-V-vi-iii", "IV-vi-I-V"],
-    "Dream Rock": ["ii-V-I", "IV-I-V-vi", "Sustained chords", "I-vi-IV-V", "ii-IV-I-V"]
+    "Metal/Death Metal": ["i-VII-VI", "i-VIIb-V", "Trítonos"],
+    "Metal/Power Metal": ["I-V-vi-IV", "IV-V-I", "Harmônicos"],
+    "Punk/Hardcore": ["I-IV-V", "Power chords", "Palm mute"],
+    "Shoegaze": ["I-iii-IV", "Maj7/add9", "Wall of Sound"],
+    "Dream Rock": ["ii-V-I", "IV-I-V-vi", "Sustained chords"]
 }
 
 DICIONARIO_RIMAS = {
     "ação": ["rebelião", "emancipação", "transformação"],
     "dor": ["valor", "tambor", "ardor"],
     "noite": ["desconforto", "apogeu", "redemoinho"],
-    "mar": ["polar", "vulgar", "altar"],
-    "vida": ["ferida", "cumprida", "descida"],
-    "som": ["tom", "dom", "pavão"],
-    "coração": ["solidão", "revolução", "ilusão"],
-    "luz": ["cruz", "fuz", "seduz"],
-    "sombras": ["palavras", "camas", "tramas"],
-    "silêncio": ["conhecimento", "sentimento", "movimento"],
-    "memórias": ["histórias", "vitórias", "glórias"],
-    "sonhos": ["caminhos", "rinhos", "vinhos"],
-    "natureza": ["beleza", "certeza", "pureza"],
-    "tranquilidade": ["felicidade", "solidão", "eternidade"],
-    "mistério": ["sério", "critério", "interesse"],
-    "reflexão": ["ação", "revolução", "ilusão"],
-    "rebelião": ["ação", "transformação", "emancipação"],
-    "protesto": ["manifesto", "pretexto", "contexto"],
-    "sociedade": ["realidade", "solidão", "liberdade"],
-    "liberdade": ["idade", "verdade", "felicidade"],
-    "fantasia": ["melodia", "sinfonia", "harmonia"],
-    "heróis": ["você", "nós", "pelo"],
-    "batalha": ["morte", "alma", "caminhada"],
-    "sangue": ["sangue", "luz", "som"],
-    "guerra": ["terra", "era", "espera"],
-    "desespero": ["zero", "espero", "mero"],
+    "mar": "polar", "vulgar", "altar"],
+    "vida": ["ferida", "cumprida", "descida"]
 }
-
-TEMAS_DETALHADOS = {
-    "Metal/Power Metal": {
-        "nucleos": [
-            "Cavaleiro das estrelas",
-            "Dragão de ébano",
-            "Espada ancestral",
-            "Profecia celestial"
-        ],
-        "acoes": [
-            "ergue o lábaro",
-            "cruza o horizonte",
-            "desafia o crepúsculo",
-            "convoca os eleitos"
-        ],
-        "elementos": [
-            "sob a lua rubra",
-            "entre relâmpagos cósmicos",
-            "no altar dos deuses antigos",
-            "pelas veredas do destino"
-        ]
-    },
-    "Punk/Hardcore": {
-        "nucleos": [
-            "rebelião urbana",
-            "gritos de liberdade",
-            "ruas em chamas",
-            "sombras da opressão"
-        ],
-        "verbos": [
-            "grita contra a injustiça",
-            "desafia o sistema",
-            "rompe as correntes",
-            "constrói um novo amanhã",
-            "rompe as barreiras",
-            "constrói um novo amanhã"
-        ],
-        "complementos": [
-            "sistema opressor",
-            "corrupção governamental",
-            "luta pela verdade",
-            "opressão social",
-            "futuro incerto",
-            "solidão na multidão"
-        ]
-    },
-    "Shoegaze": {
-        "nucleos": ["memórias vivas", "sonhos perdidos", "natureza efêmera", "silêncio profundo"],
-        "verbos": ["flutua em lagrimas", "desvanece em mente", "abraça me forte", "perde a consciência"],
-        "complementos": ["eterno amor", "infinito ao voar", "transcendente em brilho", "etéreo em luz"]
-    },
-    "Dream Rock": {
-        "nucleos": ["mistério da noite", "tranquilidade ao luar", "reflexão silenciosa", "sonhos profundos"],
-        "verbos": ["dança nas estrelas", "sussurra alto", "me abraça", "persegue meu ego"],
-        "complementos": ["luz em minha cor", "sombras escuras", "universo paralelo", "tempo perdido"] 
-    },
-    "Alternative Rock": {
-        "nucleos": ["rebelião desenfreada", "protesto sem graça", "sociedade corrompida", "liberdade de escolhas"],
-        "verbos": ["grita alto", "desafia o sistema", "rompe barreiras", "constrói pontes"],
-        "complementos": ["sistema sitiado", "corrupção generalizada", "opressão controlada", "futuro sombrio"]
-    },
-    "Indie Rock": {
-        "nucleos": ["memórias vivas", "sonhos sem nexo", "natureza morta", "silêncio abafado"],
-        "verbos": ["flutua alto", "desvanece devagar", "abraça meus contos", "perde consciência"],
-        "complementos": ["eterno viver", "infinito calmo", "transcendente luar", "etéreo em cruz"]
-    },
-    "Post-Rock": {
-        "nucleos": ["mistério do tempo", "tranquilidade duvidada", "reflexão às avessas", "sonhos loucos"],
-        "verbos": ["dança pra mim", "sussurra devagar", "abraça meu ar", "persegue meu ser"],
-        "complementos": ["luz nas sombras", "sombras vazias", "universo cosmico", "tempo passado"]
-    }
-
-
-}
-# ========== TEMAS DE LETRA ATUALIZADOS ==========
-# Temas de letra para cada subgênero musical
-# Adicionando temas mais específicos e variados
-# para enriquecer a composição musical
 
 TEMAS_LETRA = {
-    "Metal/Death Metal": ["morte", "desespero", "sangue", "guerra"],
-    "Metal/Power Metal": ["fantasia", "heróis", "batalha", "luz"],
-    "Punk/Hardcore": ["rebelião", "sociedade", "protesto", "liberdade"],
-    "Shoegaze": ["amor", "solidão", "memórias", "sonhos"],
-    "Dream Rock": ["natureza", "mistério", "tranquilidade", "reflexão"],
-    "Alternative Rock": ["rebelião", "protesto", "sociedade", "liberdade"],
-    "Indie Rock": ["memórias", "sonhos", "natureza", "silêncio"],
-    "Post-Rock": ["mistério", "tranquilidade", "reflexão", "sonhos"]
+    "Metal/Death Metal": ["Colapso social", "Existencialismo", "Mitologia obscura"],
+    "Metal/Power Metal": ["Epicidade", "Batalhas", "Fantasia heroica"],
+    "Punk/Hardcore": ["Protesto", "Liberdade", "Rebelião urbana"],
+    "Shoegaze": ["Efemérides", "Memórias", "Estados emocionais"],
+    "Dream Rock": ["Sonhos", "Nostalgia", "Relacionamentos"]
 }
 
 # ========== GERADOR MUSICAL CORRIGIDO ==========
-def gerar_linha_poetica(tema: dict) -> str:
-   return f"{random.choice(tema['nucleos'])} {random.choice(tema['verbos'])} {random.choice(tema['complementos'])}"   
+def gerar_rima(palavra: str, silabas: int = 2) -> str:
+    sufixo = palavra.lower()[-silabas:]
+    return random.choice(DICIONARIO_RIMAS.get(sufixo, [f"{palavra}..."]))
+
 def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
-    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
-    estrofe = []
-    
-    for _ in range(linhas):
-        linha = gerar_linha_poetica(tema)
-        estrofe.append(linha)
-    
-    return estrofe, tipo
-
-def gerar_rima(palavra: str, silabas: int = 3) -> str:
-    sufixos = {
-        2: palavra[-2:],
-        3: palavra[-3:],
-        4: palavra[-4:]
-    }
-    return random.choice(DICIONARIO_RIMAS.get(sufixos[silabas], [palavra]))
-
-def validar_linha(nova_linha: str, linhas_existentes: list) -> bool:
-    palavras = nova_linha.split()
-    return not any(
-        palavras.count(palavra) > 2 for palavra in palavras
-    ) and nova_linha not in linhas_existentes
-
-def gerar_estrofe_modernizada(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
-    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
-    esquema = random.choice(["ABAB", "AABA", "ABCD"])
+    temas = TEMAS_LETRA.get(subgenero, ["abstrato"])
+    esquema = random.choice(["ABAB", "AABB", "ABCB"])
     
     frases = []
-    ultimas_rimas = {}
-    
     for i in range(linhas):
-        # Gera linha baseada na estrutura poética
-        nova_linha = gerar_linha_poetica(tema)
-        
-        # Aplica sistema de rimas
-        if esquema in ["ABAB", "AABA"]:
-            if i in [0, 2] and esquema == "ABAB":
-                rima_alvo = ultimas_rimas.get(0, nova_linha.split()[-1])
-                nova_linha = gerar_rima(rima_alvo, silabas=3) + " " + nova_linha
-            elif i == 3 and esquema == "AABA":
-                nova_linha = gerar_rima(ultimas_rimas[0], silabas=3) + " " + nova_linha
-        
-        frases.append(nova_linha.capitalize())
-        ultimas_rimas[i] = nova_linha.split()[-1]
+        base = random.choice(temas)
+        if i > 0 and esquema in ["ABAB", "AABB"]:
+            if (esquema == "ABAB" and i % 2 == 1) or (esquema == "AABB" and i % 2 == 0):
+                frases.append(gerar_rima(frases[-1]))
+                continue
+        frases.append(f"{base} {random.choice(['sombrio', 'épico', 'etéreo'])}")
     
     return frases, esquema
 
@@ -215,7 +81,7 @@ VERSO:\n{partes['verso']}\n\n
 REFRAO:\n{partes['refrao']}\n\n
 PONTE:\n{partes['ponte']}"""
     
-    return banda_ref, acordes, letra_formatada
+    return greet(nome), banda_ref, acordes, letra_formatada
 
 # ========== INTERFACE ATUALIZADA ==========
 with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
@@ -232,6 +98,7 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
     btn = gr.Button("Criar Música", variant="primary")
     
     with gr.Column():
+        saudacao = gr.Textbox(label="Mensagem")
         referencia = gr.Textbox(label="Banda Referência")
         acordes = gr.Textbox(label="Progressão de Acordes")
         letra = gr.Textbox(label="Letra Completa", lines=15)
@@ -239,7 +106,7 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
     btn.click(
         fn=gerar_musica_completa,
         inputs=[nome, subgenero],
-        outputs=[referencia, acordes, letra]
+        outputs=[saudacao, referencia, acordes, letra]
     )
 
 app.launch()
