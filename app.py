@@ -1,133 +1,112 @@
 import gradio as gr
 import random
-from typing import Dict
+from typing import Dict, List, Tuple
 
-# ========== BANCO DE DADOS ATUALIZADO ==========
-FRASES_POR_ESTILO = {
-    "Punk": {
-        "intro": [
-            "Acordes distorcidos ecoam na escuridão",
-            "Batidas aceleradas invadem as ruas",
-            "A revolução começa agora!",
-            "Sangue, suor e amplificadores"
-        ],
-        "verso": [
-            "A cidade está podre e ninguém se importa!",
-            "Gritos ecoam mas ninguém escuta",
-            "Quebramos as regras só por existir",
-            "O sistema caiu e ninguém viu"
-        ],
-        "refrao": [
-            "ISSO NÃO É UMA FASE! (x3)",
-            "Queimem tudo até o chão!",
-            "Não somos sua diversão!",
-            "REVOLTA É A SOLUÇÃO!"
-        ],
-        "ponte": [
-            "Guitarras rugem como feras",
-            "O caos é nossa linguagem",
-            "Pichações na parede do tempo"
-        ],
-        "outro": [
-            "O último acorde ainda ecoa",
-            "Marcas permanecem no asfalto",
-            "A rebeldia nunca morre"
-        ]
-    },
-    "Shoegaze": {
-        "intro": [
-            "Névoa sonora envolve os sentidos",
-            "Sintetizadores sussurram segredos",
-            "O universo em camadas de feedback"
-        ],
-        "verso": [
-            "Nuvens de algodão cobrem o sol da tarde",
-            "Seu nome ecoa em câmera lenta",
-            "O ar cheira a chuva e transistor",
-            "Todos os relógios pararam às 4h"
-        ],
-        "refrao": [
-            "Perdido em reverberação",
-            "O abismo me chama em do sustenido",
-            "Flutuar é a única opção"
-        ],
-        "ponte": [
-            "O verão dissolveu em químicos",
-            "Seus olhos são dois eclipses",
-            "Respire fundo antes de mergulhar"
-        ],
-        "outro": [
-            "Ecos permanecem na névoa",
-            "O último acorde se dissolve",
-            "Silêncio em 360 graus"
-        ]
-    }
+# ========== SISTEMA DE SAUDAÇÃO ATUALIZADO ==========
+def greet(name: str) -> str:
+    saudacoes = ["🎸 Olá", "🤘 Saudações", "🎤 Bem-vindo"]
+    return f"{random.choice(saudacoes)} {name}! Vamos compor algo épico hoje?"
+
+# ========== BANCO DE DADOS MUSICAL COMPLETO ==========
+BANDAS_ICONICAS = {
+    "Metal/Death Metal": ["Cannibal Corpse", "Morbid Angel", "Death"],
+    "Metal/Power Metal": ["Helloween", "Blind Guardian", "DragonForce"],
+    "Punk/Hardcore": ["Bad Brains", "Black Flag", "Dead Kennedys"],
+    "Shoegaze": ["My Bloody Valentine", "Slowdive", "Ride"],
+    "Dream Rock": ["Beach House", "Mazzy Star", "Cocteau Twins"]
 }
 
-# ========== GERADOR DE PARTES CORRIGIDO ==========
-def gerar_partes(tipo: str, estilo: str, num_frases: int) -> str:
-    """Gera uma parte da música com número exato de frases"""
-    try:
-        base = FRASES_POR_ESTILO[estilo][tipo]
-    except KeyError:
-        base = [f"[SEÇÃO {tipo.upper()} INDISPONÍVEL PARA {estilo.upper()}]"]
-    
-    # Garante que não repetirá frases na mesma seção
-    selected = random.sample(base, min(num_frases, len(base)))
-    
-    # Preenche com fallback se necessário
-    while len(selected) < num_frases:
-        selected.append(f"[{tipo.upper()} {len(selected)+1} DO {estilo.upper()}]")
-    
-    return "\n".join(selected)
+PROGRESSOES = {
+    "Metal/Death Metal": ["i-VII-VI", "i-VIIb-V", "Trítonos"],
+    "Metal/Power Metal": ["I-V-vi-IV", "IV-V-I", "Harmônicos"],
+    "Punk/Hardcore": ["I-IV-V", "Power chords", "Palm mute"],
+    "Shoegaze": ["I-iii-IV", "Maj7/add9", "Wall of Sound"],
+    "Dream Rock": ["ii-V-I", "IV-I-V-vi", "Sustained chords"]
+}
 
-# ========== GERADOR COMPLETO ATUALIZADO ==========
-def gerar_letra_estruturada(tema: str, estilo: str) -> tuple:
-    estrutura = {
-        "intro": 4,
-        "verso1": 4,
-        "refrao": 4,
-        "verso2": 4,
-        "ponte": 4,
-        "outro": 4
-    }
+DICIONARIO_RIMAS = {
+    "ação": ["rebelião", "emancipação", "transformação"],
+    "dor": ["valor", "tambor", "ardor"],
+    "noite": ["desconforto", "apogeu", "redemoinho"],
+    "mar": "polar", "vulgar", "altar"],
+    "vida": ["ferida", "cumprida", "descida"]
+}
+
+TEMAS_LETRA = {
+    "Metal/Death Metal": ["Colapso social", "Existencialismo", "Mitologia obscura"],
+    "Metal/Power Metal": ["Epicidade", "Batalhas", "Fantasia heroica"],
+    "Punk/Hardcore": ["Protesto", "Liberdade", "Rebelião urbana"],
+    "Shoegaze": ["Efemérides", "Memórias", "Estados emocionais"],
+    "Dream Rock": ["Sonhos", "Nostalgia", "Relacionamentos"]
+}
+
+# ========== GERADOR MUSICAL CORRIGIDO ==========
+def gerar_rima(palavra: str, silabas: int = 2) -> str:
+    sufixo = palavra.lower()[-silabas:]
+    return random.choice(DICIONARIO_RIMAS.get(sufixo, [f"{palavra}..."]))
+
+def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
+    temas = TEMAS_LETRA.get(subgenero, ["abstrato"])
+    esquema = random.choice(["ABAB", "AABB", "ABCB"])
     
+    frases = []
+    for i in range(linhas):
+        base = random.choice(temas)
+        if i > 0 and esquema in ["ABAB", "AABB"]:
+            if (esquema == "ABAB" and i % 2 == 1) or (esquema == "AABB" and i % 2 == 0):
+                frases.append(gerar_rima(frases[-1]))
+                continue
+        frases.append(f"{base} {random.choice(['sombrio', 'épico', 'etéreo'])}")
+    
+    return frases, esquema
+
+def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str]:
+    # Parte 1: Elementos estruturais
     partes = {}
-    for parte, quantidade in estrutura.items():
-        tipo = parte.rstrip('12')  # Remove numeração dos versos
-        partes[parte] = gerar_partes(tipo, estilo, quantidade)
+    estruturas = ["intro", "verso", "refrao", "ponte"]
     
-    letra_formatada = f"""INTRO:\n{partes['intro']}\n\n
-VERSO 1:\n{partes['verso1']}\n\n
+    for parte in estruturas:
+        linhas = 4 if parte != "refrao" else 6
+        frases, esquema = gerar_estrofe(subgenero, parte, linhas)
+        partes[parte] = "\n".join(frases)
+    
+    # Parte 2: Elementos técnicos
+    banda_ref = random.choice(BANDAS_ICONICAS[subgenero])
+    acordes = " | ".join(random.sample(PROGRESSOES[subgenero], 3))
+    bpm = str(random.randint(80, 200)) + " BPM"
+    
+    # Parte 3: Montagem da letra
+    letra_formatada = f"""INTRO ({esquema}):\n{partes['intro']}\n\n
+VERSO:\n{partes['verso']}\n\n
 REFRAO:\n{partes['refrao']}\n\n
-VERSO 2:\n{partes['verso2']}\n\n
-PONTE:\n{partes['ponte']}\n\n
-OUTRO:\n{partes['outro']}"""
+PONTE:\n{partes['ponte']}"""
     
-    return f"{tema} ({estilo})", letra_formatada
+    return greet(nome), banda_ref, acordes, letra_formatada
 
-# ========== INTERFACE CORRIGIDA ==========
-with gr.Blocks(title="Gerador de Letras Profissional") as app:
-    gr.Markdown("# 🎤 **Gerador de Letras Estruturadas**")
+# ========== INTERFACE ATUALIZADA ==========
+with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
+    gr.Markdown("# 🤖🎸 **Assistente de Composição Musical**")
     
     with gr.Row():
-        tema = gr.Textbox(label="Tema Principal", value="amor em tempos de caos")
-        estilo = gr.Dropdown(
-            label="Estilo Musical", 
-            choices=list(FRASES_POR_ESTILO.keys()),  # Usa apenas estilos com dados
-            value="Punk"
+        nome = gr.Textbox(label="Seu Nome", value="Raquel")
+        subgenero = gr.Dropdown(
+            label="Estilo Musical",
+            choices=list(BANDAS_ICONICAS.keys()),
+            value="Metal/Power Metal"
         )
     
-    btn = gr.Button("Gerar Letra", variant="primary")
+    btn = gr.Button("Criar Música", variant="primary")
     
-    with gr.Row():
-        titulo = gr.Textbox(label="Título")
-        letra = gr.Textbox(label="Letra Completa", lines=20)
+    with gr.Column():
+        saudacao = gr.Textbox(label="Mensagem")
+        referencia = gr.Textbox(label="Banda Referência")
+        acordes = gr.Textbox(label="Progressão de Acordes")
+        letra = gr.Textbox(label="Letra Completa", lines=15)
     
     btn.click(
-        fn=gerar_letra_estruturada,
-        inputs=[tema, estilo],
-        outputs=[titulo, letra]
+        fn=gerar_musica_completa,
+        inputs=[nome, subgenero],
+        outputs=[saudacao, referencia, acordes, letra]
     )
 
 app.launch()
