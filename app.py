@@ -64,15 +64,17 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Dict[str, str]:
     banda_ref = random.choice(BANDAS_ICONICAS.get(subgenero, ["Artista Desconhecido"]))
     acordes = " | ".join(PROGRESSOES.get(subgenero, ["I-IV-V"]))
     
-    return {
+  return {
         "Saudação": saudacao,
         "Banda Referência": banda_ref,
         "Progressão": acordes,
-        "Letra": f"""INTRO:\n{"\n".join(partes['intro'])}\n\n
-VERSO:\n{"\n".join(partes['verso'])}\n\n
-REFRAO:\n{"\n".join(partes['refrao'])}\n\n
-PONTE:\n{"\n".join(partes['ponte'])}"""
-    }
+        "Letra": (
+            f"INTRO:\n{'\n'.join(partes['intro'])}\n\n"
+            f"VERSO:\n{'\n'.join(partes['verso'])}\n\n"
+            f"REFRAO:\n{'\n'.join(partes['refrao'])}\n\n"
+            f"PONTE:\n{'\n'.join(partes['ponte'])}"
+        )
+   }
 
 # ========== INTERFACE ==========
 with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
