@@ -120,10 +120,10 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
     banda_ref = random.choice(BANDAS_ICONICAS.get(subgenero, ["Banda Desconhecida"]))
     acordes = " | ".join(random.sample(PROGRESSOES.get(subgenero, ["I-IV-V"]), 3))
     bpm = str(random.randint(80, 200)) + " BPM"
-    letra_formatada = f"""INTRO ({esquemas['intro']}):\n{partes['intro']}\n\n
-VERSO ({esquemas['verso']}):\n{partes['verso']}\n\n
-REFRAO ({esquemas['refrao']}):\n{partes['refrao']}\n\n
-PONTE ({esquemas['ponte']}):\n{partes['ponte']}"""
+    letra_formatada = f"""INTRO:\n{partes['intro']}\n\n
+VERSO:\n{partes['verso']}\n\n
+REFRAO:\n{partes['refrao']}\n\n
+PONTE:\n{partes['ponte']}"""
     return banda_ref, acordes, letra_formatada, bpm
 
 # Interface Gradio
