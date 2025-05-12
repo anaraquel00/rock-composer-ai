@@ -2,6 +2,8 @@
 import gradio as gr
 import random
 from itertools import cycle
+from typing import Dict, List, Tuple
+
 
 # ========== BANCO DE DADOS ==========
 BANDAS_ICONICAS = {
@@ -12,6 +14,29 @@ BANDAS_ICONICAS = {
     "Dream Rock": ["Mazzy Star", "Beach House", "The xx", "Cigarettes After Sex"],
     "Rock Alternativo": ["Radiohead", "The Smashing Pumpkins", "Pixies", "Joy Division"]
 }
+
+SUB_GENEROS = {
+    "Metal": {
+        "Death Metal": {
+            "vocabulario": ["carnificina", "túmulos", "entranhas", "putrefação"],
+            "esquema_rima": "ABAB",
+            "tempo": "220-300 BPM"
+        },
+        "Power Metal": {
+            "vocabulario": ["dragões", "honra", "espadas", "destino"],
+            "esquema_rima": "AABB",
+            "tempo": "180-220 BPM"
+        }
+    },
+    "Punk": {
+        "Hardcore": {
+            "vocabulario": ["revolta", "opressão", "ruínas", "gritos"],
+            "esquema_rima": "AAAA",
+            "tempo": "Batida rápida"
+        }
+    }
+}
+
 
 PROGRESSOES = {
     "Punk": ["I-IV-V", "I-VIIb-IV", "Power chords"],
@@ -76,7 +101,48 @@ def gerar_diagrama(estilo):
     }
     return estruturas.get(estilo, "VERSO-REFRAO-PONTE-REFRAO")
 
-# (Funções gerar_verso, gerar_refrao etc. seriam similares às anteriores mas com mais variações)
+# ========== SISTEMA DE RIMAS ==========
+DICIONARIO_RIMAS = {
+    "ação": ["destruição", "perdição", "canção"],
+    "dor": ["amor", "tambor", "flor"],
+    "noite": ["foice", "estoque", "arroite"]
+}
+
+def gerar_rima(palavra_chave: str) -> str:
+    return random.choice(DICIONARIO_RIMAS.get(palavra_chave[-3:], ["sem rima"])[0])
+
+def aplicar_esquema(frases: List[str], esquema: str) -> List[str]:
+    if esquema == "ABAB":
+        frases[1] = gerar_rima(frases[0])
+        frases[3] = gerar_rima(frases[2])
+    elif esquema == "AABB":
+        frases[1] = gerar_rima(frases[0])
+        frases[3] = gerar_rima(frases[2])
+    return frases
+
+# ========== GERADOR DE PARTES ==========
+def gerar_frase(subgenero: str, tipo: str) -> str:
+    dados = SUB_GENEROS.get(subgenero.split("/")[0], {}).get(subgenero.split("/")[1], {})
+    palavras = dados.get("vocabulario", [])
+    return f"{random.choice(palavras)} {random.choice(palavras)}" if palavras else "Letra automática"
+
+def gerar_estrofes(subgenero: str) -> Dict[str, str]:
+    dados = SUB_GENEROS.get(subgenero.split("/")[0], {}).get(subgenero.split("/")[1], {})
+    esquema = dados.get("esquema_rima", "ABAB")
+    
+    partes = {
+        "intro": aplicar_esquema([gerar_frase(subgenero, "intro") for _ in range(4)], esquema),
+        "verso": aplicar_esquema([gerar_frase(subgenero, "verso") for _ in range(4)], esquema),
+        "refrao": aplicar_esquema([gerar_frase(subgenero, "refrao") for _ in range(6)], esquema)
+    }
+    
+    return {
+        "BPM": dados.get("tempo", "120 BPM"),
+        "Letra": f"""INTRO ({esquema}):\n{"\n".join(partes['intro'])}\n\n
+VERSO:\n{"\n".join(partes['verso'])}\n\n
+REFRAO:\n{"\n".join(partes['refrao'])}"""
+    }
+
 
 # ========== INTERFACE ==========
 with gr.Blocks(theme=gr.themes.Monochrome()) as app:
@@ -113,5 +179,7 @@ with gr.Blocks(theme=gr.themes.Monochrome()) as app:
     )
     
     btn.click(fn=gerar_completa, inputs=inputs, outputs=outputs)
+
+    
 
 app.launch()
