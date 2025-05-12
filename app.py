@@ -33,7 +33,10 @@ PROGRESSOES = {
     "Metal/Power Metal": ["I-V-vi-IV", "IV-V-I", "Harmônicos", "I-iii-IV-V", "vi-IV-I-V"],
     "Punk/Hardcore": ["I-IV-V", "Power chords", "Palm mute", "I-V-vi-IV", "IV-V-I-IV"],
     "Shoegaze": ["I-iii-IV", "Maj7/add9", "Wall of Sound", "I-V-vi-iii", "IV-vi-I-V"],
-    "Dream Rock": ["ii-V-I", "IV-I-V-vi", "Sustained chords", "I-vi-IV-V", "ii-IV-I-V"]
+    "Dream Rock": ["ii-V-I", "IV-I-V-vi", "Sustained chords", "I-vi-IV-V", "ii-IV-I-V"],
+    "Alternative Rock": ["I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV", "ii-V-I"],
+    "Indie Rock": ["I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV", "ii-V-I"],
+    "Post-Rock": ["I-IV-V", "I-vi-IV-V", "IV-I-V-vi", "I-V-vi-IV", "ii-V-I"]
 }
 
 # ========== TEMAS DE LETRA ATUALIZADOS ==========
