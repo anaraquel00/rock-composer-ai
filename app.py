@@ -247,5 +247,6 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue")) as app:
         inputs=[nome, subgenero],
         outputs=[referencia, acordes, letra, letra_banda]
     )
- app.launch()
+    
+    app.launch()
 
