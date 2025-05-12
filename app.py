@@ -55,9 +55,10 @@ TEMAS_LETRA = {
 # ========== GERADOR MUSICAL CORRIGIDO ==========
 # Função auxiliar para gerar linha poética
 def gerar_linha_poetica(tema: Dict[str, List[str]]) -> str:
-    nucleos = random.choice(tema.get("nucleos", []))
-    acoes = random.choice(tema.get("acoes", []))
-    elementos = random.choice(tema.get("elementos", []))
+    # Certifique-se de que as listas não estão vazias antes de escolher
+    nucleos = random.choice(tema.get("nucleos", ["tema padrão"]))
+    acoes = random.choice(tema.get("acoes", ["ação padrão"]))
+    elementos = random.choice(tema.get("elementos", ["elemento padrão"]))
     return f"{nucleos} {acoes} {elementos}"
 
 # Função para gerar rima com validação de comprimento
@@ -80,7 +81,13 @@ def validar_linha(nova_linha: str, linhas_existentes: list) -> bool:
 
 # Função para gerar estrofe
 def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
+    # Use um tema padrão caso o subgênero não seja encontrado
     tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
+    
+    # Verifique se o tema possui as chaves necessárias
+    if not all(key in tema for key in ["nucleos", "acoes", "elementos"]):
+        tema = TEMAS_DETALHADOS["Metal/Power Metal"]  # Fallback para tema padrão
+    
     estrofe = []
     for _ in range(linhas):
         linha = gerar_linha_poetica(tema)
