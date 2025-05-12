@@ -53,7 +53,7 @@ TEMAS_DETALHADOS = {
         "acoes": ["dança nas estrelas", "sussurra alto", "me abraça", "persegue meu ego"],
         "elementos": ["luz em minha cor", "sombras escuras", "universo paralelo", "tempo perdido"]
     },
-    "Alternative Rock": {
+       "Alternative Rock": {
         "nucleos": ["rebelião desenfreada", "protesto sem graça", "sociedade corrompida", "liberdade de escolhas"],
         "acoes": ["grita alto", "desafia o sistema", "rompe barreiras", "constrói pontes"],
         "elementos": ["sistema sitiado", "corrupção generalizada", "opressão controlada", "futuro sombrio"]
