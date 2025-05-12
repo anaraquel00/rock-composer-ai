@@ -1,6 +1,9 @@
 import gradio as gr # type: ignore
 import random
 from typing import Dict, List, Tuple
+from dicionario_rimas import DICIONARIO_RIMAS
+from temas_detalhados import TEMAS_DETALHADOS
+from instrucoes_estilisticas import INSTRUCOES_ESTILISTICAS
 
 # ========== BANCO DE DADOS MUSICAL COMPLETO ==========
 BANDAS_ICONICAS = {
@@ -33,106 +36,6 @@ PROGRESSOES = {
     "Dream Rock": ["ii-V-I", "IV-I-V-vi", "Sustained chords", "I-vi-IV-V", "ii-IV-I-V"]
 }
 
-DICIONARIO_RIMAS = {
-    "ação": ["rebelião", "emancipação", "transformação"],
-    "dor": ["valor", "tambor", "ardor"],
-    "noite": ["desconforto", "apogeu", "redemoinho"],
-    "mar": ["polar", "vulgar", "altar"],
-    "vida": ["ferida", "cumprida", "descida"],
-    "som": ["tom", "dom", "pavão"],
-    "coração": ["solidão", "revolução", "ilusão"],
-    "luz": ["cruz", "fuz", "seduz"],
-    "sombras": ["palavras", "camas", "tramas"],
-    "silêncio": ["conhecimento", "sentimento", "movimento"],
-    "memórias": ["histórias", "vitórias", "glórias"],
-    "sonhos": ["caminhos", "rinhos", "vinhos"],
-    "natureza": ["beleza", "certeza", "pureza"],
-    "tranquilidade": ["felicidade", "solidão", "eternidade"],
-    "mistério": ["sério", "critério", "interesse"],
-    "reflexão": ["ação", "revolução", "ilusão"],
-    "rebelião": ["ação", "transformação", "emancipação"],
-    "protesto": ["manifesto", "pretexto", "contexto"],
-    "sociedade": ["realidade", "solidão", "liberdade"],
-    "liberdade": ["idade", "verdade", "felicidade"],
-    "fantasia": ["melodia", "sinfonia", "harmonia"],
-    "heróis": ["você", "nós", "pelo"],
-    "batalha": ["morte", "alma", "caminhada"],
-    "sangue": ["sangue", "luz", "som"],
-    "guerra": ["terra", "era", "espera"],
-    "desespero": ["zero", "espero", "mero"],
-}
-
-TEMAS_DETALHADOS = {
-    "Metal/Power Metal": {
-        "nucleos": [
-            "Cavaleiro das estrelas",
-            "Dragão de ébano",
-            "Espada ancestral",
-            "Profecia celestial"
-        ],
-        "acoes": [
-            "ergue o lábaro",
-            "cruza o horizonte",
-            "desafia o crepúsculo",
-            "convoca os eleitos"
-        ],
-        "elementos": [
-            "sob a lua rubra",
-            "entre relâmpagos cósmicos",
-            "no altar dos deuses antigos",
-            "pelas veredas do destino"
-        ]
-    },
-    "Punk/Hardcore": {
-        "nucleos": [
-            "rebelião urbana",
-            "gritos de liberdade",
-            "ruas em chamas",
-            "sombras da opressão"
-        ],
-        "acoes": [
-            "grita contra a injustiça",
-            "desafia o sistema",
-            "rompe as correntes",
-            "constrói um novo amanhã",
-            "rompe as barreiras",
-            "constrói um novo amanhã"
-        ],
-        "elementos": [
-            "sistema opressor",
-            "corrupção governamental",
-            "luta pela verdade",
-            "opressão social",
-            "futuro incerto",
-            "solidão na multidão"
-        ]
-    },
-    "Shoegaze": {
-        "nucleos": ["memórias vivas", "sonhos perdidos", "natureza efêmera", "silêncio profundo"],
-        "acoes": ["flutua em lágrimas", "desvanece em mente", "abraça-me forte", "perde a consciência"],
-        "elementos": ["eterno amor", "infinito ao voar", "transcendente em brilho", "etéreo em luz"]
-    },
-    "Dream Rock": {
-        "nucleos": ["mistério da noite", "tranquilidade ao luar", "reflexão silenciosa", "sonhos profundos"],
-        "acoes": ["dança nas estrelas", "sussurra alto", "me abraça", "persegue meu ego"],
-        "elementos": ["luz em minha cor", "sombras escuras", "universo paralelo", "tempo perdido"]
-    },
-    "Alternative Rock": {
-        "nucleos": ["rebelião desenfreada", "protesto sem graça", "sociedade corrompida", "liberdade de escolhas"],
-        "acoes": ["grita alto", "desafia o sistema", "rompe barreiras", "constrói pontes"],
-        "elementos": ["sistema sitiado", "corrupção generalizada", "opressão controlada", "futuro sombrio"]
-    },
-    "Indie Rock": {
-        "nucleos": ["memórias vivas", "sonhos sem nexo", "natureza morta", "silêncio abafado"],
-        "acoes": ["flutua alto", "desvanece devagar", "abraça meus contos", "perde consciência"],
-        "elementos": ["eterno viver", "infinito calmo", "transcendente luar", "etéreo em cruz"]
-    },
-    "Post-Rock": {
-        "nucleos": ["mistério do tempo", "tranquilidade duvidada", "reflexão às avessas", "sonhos loucos"],
-        "acoes": ["dança pra mim", "sussurra devagar", "abraça meu ar", "persegue meu ser"],
-        "elementos": ["luz nas sombras", "sombras vazias", "universo cósmico", "tempo passado"]
-    }
-}
 # ========== TEMAS DE LETRA ATUALIZADOS ==========
 # Temas de letra para cada subgênero musical
 # Adicionando temas mais específicos e variados
@@ -206,11 +109,13 @@ def gerar_estrofe_modernizada(subgenero: str, linhas: int) -> Tuple[List[str], s
 def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str]:
     partes = {}
     esquemas = {}
+    instrucoes = INSTRUCOES_ESTILISTICAS.get(subgenero, {})
     estruturas = ["intro", "verso", "refrao", "ponte"]
     for parte in estruturas:
         linhas = 4 if parte != "refrao" else 6
         frases, esquema = gerar_estrofe(subgenero, parte, linhas)
-        partes[parte] = "\n".join(frases)
+        descricao = instrucoes.get(parte, "Descrição não disponível")
+        partes[parte] = f"[{parte.upper()}: {descricao}]\n" + "\n".join(frases)
         esquemas[parte] = esquema
     banda_ref = random.choice(BANDAS_ICONICAS.get(subgenero, ["Banda Desconhecida"]))
     acordes = " | ".join(random.sample(PROGRESSOES.get(subgenero, ["I-IV-V"]), 3))
