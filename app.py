@@ -28,7 +28,7 @@ DICIONARIO_RIMAS = {
     "ação": ["rebelião", "emancipação", "transformação"],
     "dor": ["valor", "tambor", "ardor"],
     "noite": ["desconforto", "apogeu", "redemoinho"],
-    "mar": "polar", "vulgar", "altar"],
+    "mar": ["polar", "vulgar", "altar"],
     "vida": ["ferida", "cumprida", "descida"]
 }
 
