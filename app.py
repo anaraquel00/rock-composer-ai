@@ -152,9 +152,6 @@ TEMAS_LETRA = {
 }
 
 # ========== GERADOR MUSICAL CORRIGIDO ==========
-import gradio as gr  # type: ignore
-import random
-from typing import Dict, List, Tuple
 
 # Função auxiliar para gerar linha poética
 def gerar_linha_poetica(tema: Dict[str, List[str]]) -> str:
