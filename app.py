@@ -179,7 +179,8 @@ def validar_linha(nova_linha: str, linhas_existentes: list) -> bool:
 
 # Função para gerar estrofe
 def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
-    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
+    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Death Metal, Metal/Power Metal, Punk/Hardcore," \
+    " Shoegaze, Dream Rock, Alternative Rock, Indie Rock, Post-Rock"])
     estrofe = []
     for _ in range(linhas):
         linha = gerar_linha_poetica(tema)
@@ -188,7 +189,8 @@ def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], st
 
 # Função para gerar estrofe modernizada
 def gerar_estrofe_modernizada(subgenero: str, linhas: int) -> Tuple[List[str], str]:
-    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
+    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS ["Alternative Rock,Metal/Death Metal," \
+    " Metal/Power Metal, Punk/Hardcore, Shoegaze, Dream Rock, Alternative Rock, Indie Rock, Post-Rock"])
     esquema = random.choice(["ABAB", "AABA", "ABCD"])
     frases = []
     ultimas_rimas = {}
@@ -231,7 +233,10 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
         subgenero = gr.Dropdown(
             label="Estilo Musical",
             choices=list(BANDAS_ICONICAS.keys()),
-            value="Metal/Power Metal"
+            value="Metal/Death Metal, Metal/Power Metal, Punk/Hardcore, Shoegaze, Dream Rock, Alternative Rock, Indie Rock, Post-Rock",
+            multiselect=True,
+            max_choices=3,
+            type="value"
         )
     btn = gr.Button("Criar Música", variant="primary")
     with gr.Column():
