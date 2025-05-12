@@ -5,6 +5,15 @@ from dicionario_rimas import DICIONARIO_RIMAS
 from temas_detalhados import TEMAS_DETALHADOS
 from instrucoes_estilisticas import INSTRUCOES_ESTILISTICAS
 
+
+import lyricsgenius  # type: ignore # Importa o lyricsgenius
+
+# Adicione sua API Key do Genius aqui
+GENIUS_API_KEY = "BXgdS_8Op2OWqlp1_KBo9knbI2pYzGyvn2fd4hJLbJwz8_gX55Tt4mltrymG6nBh"
+
+# Inicializa o cliente Genius
+genius = lyricsgenius.Genius("BXgdS_8Op2OWqlp1_KBo9knbI2pYzGyvn2fd4hJLbJwz8_gX55Tt4mltrymG6nBh")
+
 # ========== BANCO DE DADOS MUSICAL COMPLETO ==========
 BANDAS_ICONICAS = {
     "Metal/Death Metal": ["Cannibal Corpse", "Morbid Angel", "Death"],
@@ -112,6 +121,16 @@ TEMAS_LETRA = {
     "Post-Rock": ["mistério", "tranquilidade", "reflexão", "sonhos"]
 }
 
+# Função para buscar letras de músicas
+def buscar_letra(banda: str) -> str:
+    try:
+        print(f"Buscando letras para a banda: {banda}")
+        song = genius.search_artist(banda, max_songs=1, sort="popularity").songs[0]
+        return f"{song.title}\n\n{song.lyrics}"
+    except Exception as e:
+        print(f"Erro ao buscar letras: {e}")
+        return "Não foi possível encontrar letras para esta banda."
+
 # ========== GERADOR MUSICAL CORRIGIDO ==========
 # Função auxiliar para gerar linha poética
 def gerar_linha_poetica(tema: Dict[str, List[str]]) -> str:
@@ -200,7 +219,13 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
 VERSO:\n{partes['verso']}\n\n
 REFRAO:\n{partes['refrao']}\n\n
 PONTE:\n{partes['ponte']}"""
-    return banda_ref, acordes, letra_formatada, bpm
+    
+    # Busca a letra de uma música da banda referência
+    letra_banda = buscar_letra(banda_ref)
+
+    # Retorna os valores
+    return banda_ref, acordes, letra_formatada, letra_banda
+
 
 # Interface Gradio
 with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
@@ -220,6 +245,7 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
     btn.click(
         fn=gerar_musica_completa,
         inputs=[nome, subgenero],
-        outputs=[referencia, acordes, letra]
+        outputs=[referencia, acordes, letra, letra_banda]
     )
 app.launch()
+
