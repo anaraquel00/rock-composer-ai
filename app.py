@@ -1,10 +1,16 @@
 import gradio as gr
 import random
-from typing import Dict, List
+from typing import Dict
 
-# ========== BANCO DE DADOS ==========
+# ========== BANCO DE DADOS ATUALIZADO ==========
 FRASES_POR_ESTILO = {
     "Punk": {
+        "intro": [
+            "Acordes distorcidos ecoam na escuridão",
+            "Batidas aceleradas invadem as ruas",
+            "A revolução começa agora!",
+            "Sangue, suor e amplificadores"
+        ],
         "verso": [
             "A cidade está podre e ninguém se importa!",
             "Gritos ecoam mas ninguém escuta",
@@ -15,66 +21,92 @@ FRASES_POR_ESTILO = {
             "ISSO NÃO É UMA FASE! (x3)",
             "Queimem tudo até o chão!",
             "Não somos sua diversão!",
-            "O futuro é nosso também!",
-            "Nada vai nos calar!",
             "REVOLTA É A SOLUÇÃO!"
+        ],
+        "ponte": [
+            "Guitarras rugem como feras",
+            "O caos é nossa linguagem",
+            "Pichações na parede do tempo"
+        ],
+        "outro": [
+            "O último acorde ainda ecoa",
+            "Marcas permanecem no asfalto",
+            "A rebeldia nunca morre"
         ]
     },
     "Shoegaze": {
+        "intro": [
+            "Névoa sonora envolve os sentidos",
+            "Sintetizadores sussurram segredos",
+            "O universo em camadas de feedback"
+        ],
         "verso": [
             "Nuvens de algodão cobrem o sol da tarde",
             "Seu nome ecoa em câmera lenta",
             "O ar cheira a chuva e transistor",
             "Todos os relógios pararam às 4h"
         ],
+        "refrao": [
+            "Perdido em reverberação",
+            "O abismo me chama em do sustenido",
+            "Flutuar é a única opção"
+        ],
         "ponte": [
             "O verão dissolveu em químicos",
             "Seus olhos são dois eclipses",
-            "Respire fundo antes de mergulhar",
-            "O vazio tem um som tão doce"
+            "Respire fundo antes de mergulhar"
+        ],
+        "outro": [
+            "Ecos permanecem na névoa",
+            "O último acorde se dissolve",
+            "Silêncio em 360 graus"
         ]
     }
 }
 
-# ========== GERADOR DE PARTES ==========
+# ========== GERADOR DE PARTES CORRIGIDO ==========
 def gerar_partes(tipo: str, estilo: str, num_frases: int) -> str:
     """Gera uma parte da música com número exato de frases"""
-    frases = []
-    base = FRASES_POR_ESTILO.get(estilo, {}).get(tipo, [])
+    try:
+        base = FRASES_POR_ESTILO[estilo][tipo]
+    except KeyError:
+        base = [f"[SEÇÃO {tipo.upper()} INDISPONÍVEL PARA {estilo.upper()}]"]
     
-    for _ in range(num_frases):
-        if base:
-            frases.append(random.choice(base))
-        else:
-            # Fallback criativo
-            frases.append(f"[FRASE {tipo.upper()} DO {estilo.upper()}]")
+    # Garante que não repetirá frases na mesma seção
+    selected = random.sample(base, min(num_frases, len(base)))
     
-    return "\n".join(frases)
+    # Preenche com fallback se necessário
+    while len(selected) < num_frases:
+        selected.append(f"[{tipo.upper()} {len(selected)+1} DO {estilo.upper()}]")
+    
+    return "\n".join(selected)
 
-# ========== GERADOR COMPLETO ==========
-def gerar_letra_estruturada(tema: str, estilo: str) -> Dict[str, str]:
-    part_names = ["intro", "verso1", "refrao", "ponte", "outro"]
-    
-    partes = {
-        "intro": gerar_partes("intro", estilo, 4),
-        "verso1": gerar_partes("verso", estilo, 4),
-        "refrao": gerar_partes("refrao", estilo, 6),
-        "verso2": gerar_partes("verso", estilo, 4),
-        "ponte": gerar_partes("ponte", estilo, 4),
-        "outro": gerar_partes("outro", estilo, 4)
+# ========== GERADOR COMPLETO ATUALIZADO ==========
+def gerar_letra_estruturada(tema: str, estilo: str) -> tuple:
+    estrutura = {
+        "intro": 4,
+        "verso1": 4,
+        "refrao": 4,
+        "verso2": 4,
+        "ponte": 4,
+        "outro": 4
     }
     
-    return {
-        "Título": f"{tema} ({estilo})",
-        "Letra": f"""INTRO:\n{partes['intro']}\n\n
+    partes = {}
+    for parte, quantidade in estrutura.items():
+        tipo = parte.rstrip('12')  # Remove numeração dos versos
+        partes[parte] = gerar_partes(tipo, estilo, quantidade)
+    
+    letra_formatada = f"""INTRO:\n{partes['intro']}\n\n
 VERSO 1:\n{partes['verso1']}\n\n
 REFRAO:\n{partes['refrao']}\n\n
 VERSO 2:\n{partes['verso2']}\n\n
 PONTE:\n{partes['ponte']}\n\n
 OUTRO:\n{partes['outro']}"""
-    }
+    
+    return f"{tema} ({estilo})", letra_formatada
 
-# ========== INTERFACE ==========
+# ========== INTERFACE CORRIGIDA ==========
 with gr.Blocks(title="Gerador de Letras Profissional") as app:
     gr.Markdown("# 🎤 **Gerador de Letras Estruturadas**")
     
@@ -82,7 +114,7 @@ with gr.Blocks(title="Gerador de Letras Profissional") as app:
         tema = gr.Textbox(label="Tema Principal", value="amor em tempos de caos")
         estilo = gr.Dropdown(
             label="Estilo Musical", 
-            choices=["Punk", "Metal", "Grunge", "Shoegaze", "Dream Rock"],
+            choices=list(FRASES_POR_ESTILO.keys()),  # Usa apenas estilos com dados
             value="Punk"
         )
     
