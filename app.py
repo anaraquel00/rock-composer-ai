@@ -5,8 +5,9 @@ from dicionario_rimas import DICIONARIO_RIMAS
 from temas_detalhados import TEMAS_DETALHADOS
 from instrucoes_estilisticas import INSTRUCOES_ESTILISTICAS
 
-
-import lyricsgenius  # type: ignore # Importa o lyricsgenius
+from lyricsgenius import Genius
+import lyricsgenius.types.song  # type: ignore
+import lyricsgenius.types.album  # type: ignore
 
 # Adicione sua API Key do Genius aqui
 GENIUS_API_KEY = "BXgdS_8Op2OWqlp1_KBo9knbI2pYzGyvn2fd4hJLbJwz8_gX55Tt4mltrymG6nBh"
