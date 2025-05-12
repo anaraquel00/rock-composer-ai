@@ -189,8 +189,8 @@ def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], st
 
 # Função para gerar estrofe modernizada
 def gerar_estrofe_modernizada(subgenero: str, linhas: int) -> Tuple[List[str], str]:
-    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS ["Alternative Rock,Metal/Death Metal," \
-    " Metal/Power Metal, Punk/Hardcore, Shoegaze, Dream Rock, Alternative Rock, Indie Rock, Post-Rock"])
+    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS ["Alternative Rock, Metal/Death Metal," \
+    " Metal/Power Metal, Punk/Hardcore, Shoegaze, Dream Rock, Indie Rock, Post-Rock"])
     esquema = random.choice(["ABAB", "AABA", "ABCD"])
     frases = []
     ultimas_rimas = {}
