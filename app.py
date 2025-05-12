@@ -1,4 +1,4 @@
-import gradio as gr
+import gradio as gr # type: ignore
 import random
 from typing import Dict, List, Tuple
 
@@ -13,15 +13,21 @@ BANDAS_ICONICAS = {
     "Metal/Power Metal": ["Helloween", "Blind Guardian", "DragonForce"],
     "Punk/Hardcore": ["Bad Brains", "Black Flag", "Dead Kennedys"],
     "Shoegaze": ["My Bloody Valentine", "Slowdive", "Ride"],
-    "Dream Rock": ["Beach House", "Mazzy Star", "Cocteau Twins"]
+    "Dream Rock": ["Beach House", "Mazzy Star", "Cocteau Twins"],
+    "Alternative Rock": ["Radiohead", "Nirvana", "The Smashing Pumpkins"],
+    "Indie Rock": ["Arctic Monkeys", "Vampire Weekend", "Tame Impala"],
+    "Post-Rock": ["Explosions in the Sky", "Godspeed You! Black Emperor", "Sigur Rós"]
+}
+
+ACORDES = {
 }
 
 PROGRESSOES = {
-    "Metal/Death Metal": ["i-VII-VI", "i-VIIb-V", "Trítonos"],
-    "Metal/Power Metal": ["I-V-vi-IV", "IV-V-I", "Harmônicos"],
-    "Punk/Hardcore": ["I-IV-V", "Power chords", "Palm mute"],
-    "Shoegaze": ["I-iii-IV", "Maj7/add9", "Wall of Sound"],
-    "Dream Rock": ["ii-V-I", "IV-I-V-vi", "Sustained chords"]
+    "Metal/Death Metal": ["i-VII-VI", "i-VIIb-V", "Trítonos", "i-VI-iv-V", "Phrygian Dominant"],
+    "Metal/Power Metal": ["I-V-vi-IV", "IV-V-I", "Harmônicos", "I-iii-IV-V", "vi-IV-I-V"],
+    "Punk/Hardcore": ["I-IV-V", "Power chords", "Palm mute", "I-V-vi-IV", "IV-V-I-IV"],
+    "Shoegaze": ["I-iii-IV", "Maj7/add9", "Wall of Sound", "I-V-vi-iii", "IV-vi-I-V"],
+    "Dream Rock": ["ii-V-I", "IV-I-V-vi", "Sustained chords", "I-vi-IV-V", "ii-IV-I-V"]
 }
 
 DICIONARIO_RIMAS = {
@@ -29,15 +35,83 @@ DICIONARIO_RIMAS = {
     "dor": ["valor", "tambor", "ardor"],
     "noite": ["desconforto", "apogeu", "redemoinho"],
     "mar": ["polar", "vulgar", "altar"],
-    "vida": ["ferida", "cumprida", "descida"]
+    "vida": ["ferida", "cumprida", "descida"],
+    "som": ["tom", "dom", "pavão"],
+    "coração": ["solidão", "revolução", "ilusão"],
+    "luz": ["cruz", "fuz", "seduz"],
+    "sombras": ["palavras", "camas", "tramas"],
+    "silêncio": ["conhecimento", "sentimento", "movimento"],
+    "memórias": ["histórias", "vitórias", "glórias"],
+    "sonhos": ["caminhos", "rinhos", "vinhos"],
+    "natureza": ["beleza", "certeza", "pureza"],
+    "tranquilidade": ["felicidade", "solidão", "eternidade"],
+    "mistério": ["sério", "critério", "interesse"],
+    "reflexão": ["ação", "revolução", "ilusão"],
+    "rebelião": ["ação", "transformação", "emancipação"],
+    "protesto": ["manifesto", "pretexto", "contexto"],
+    "sociedade": ["realidade", "solidão", "liberdade"],
+    "liberdade": ["idade", "verdade", "felicidade"],
+    "fantasia": ["melodia", "sinfonia", "harmonia"],
+    "heróis": ["você", "nós", "pelo"],
+    "batalha": ["morte", "alma", "caminhada"],
+    "sangue": ["sangue", "luz", "som"],
+    "guerra": ["terra", "era", "espera"],
+    "desespero": ["zero", "espero", "mero"],
 }
 
+TEMAS_DETALHADOS = {
+    "Metal/Power Metal": {
+        "nucleos": ["Cavaleiro", "Dragão", "Espada", "Profecia"],
+        "verbos": ["ergue", "cruza", "desafia", "convoca"],
+        "complementos": ["estelar", "cósmico", "ancestral", "eterno"]
+    },
+    "Punk/Hardcore": {
+        "nucleos": ["rebelião", "protesto", "sociedade", "liberdade"],
+        "verbos": ["grita", "desafia", "rompe", "constrói"],
+        "complementos": ["sistema", "corrupção", "opressão", "futuro"]
+    },
+    "Shoegaze": {
+        "nucleos": ["memórias", "sonhos", "natureza", "silêncio"],
+        "verbos": ["flutua", "desvanece", "abraça", "perde"],
+        "complementos": ["eterno", "infinito", "transcendente", "etéreo"]
+    },
+    "Dream Rock": {
+        "nucleos": ["mistério", "tranquilidade", "reflexão", "sonhos"],
+        "verbos": ["dança", "sussurra", "abraça", "persegue"],
+        "complementos": ["luz", "sombras", "universo", "tempo"] 
+    },
+    "Alternative Rock": {
+        "nucleos": ["rebelião", "protesto", "sociedade", "liberdade"],
+        "verbos": ["grita", "desafia", "rompe", "constrói"],
+        "complementos": ["sistema", "corrupção", "opressão", "futuro"]
+    },
+    "Indie Rock": {
+        "nucleos": ["memórias", "sonhos", "natureza", "silêncio"],
+        "verbos": ["flutua", "desvanece", "abraça", "perde"],
+        "complementos": ["eterno", "infinito", "transcendente", "etéreo"]
+    },
+    "Post-Rock": {
+        "nucleos": ["mistério", "tranquilidade", "reflexão", "sonhos"],
+        "verbos": ["dança", "sussurra", "abraça", "persegue"],
+        "complementos": ["luz", "sombras", "universo", "tempo"]
+    }
+
+
+}
+# ========== TEMAS DE LETRA ATUALIZADOS ==========
+# Temas de letra para cada subgênero musical
+# Adicionando temas mais específicos e variados
+# para enriquecer a composição musical
+
 TEMAS_LETRA = {
-    "Metal/Death Metal": ["Colapso social", "Existencialismo", "Mitologia obscura"],
-    "Metal/Power Metal": ["Epicidade", "Batalhas", "Fantasia heroica"],
-    "Punk/Hardcore": ["Protesto", "Liberdade", "Rebelião urbana"],
-    "Shoegaze": ["Efemérides", "Memórias", "Estados emocionais"],
-    "Dream Rock": ["Sonhos", "Nostalgia", "Relacionamentos"]
+    "Metal/Death Metal": ["morte", "desespero", "sangue", "guerra"],
+    "Metal/Power Metal": ["fantasia", "heróis", "batalha", "luz"],
+    "Punk/Hardcore": ["rebelião", "sociedade", "protesto", "liberdade"],
+    "Shoegaze": ["amor", "solidão", "memórias", "sonhos"],
+    "Dream Rock": ["natureza", "mistério", "tranquilidade", "reflexão"],
+    "Alternative Rock": ["rebelião", "protesto", "sociedade", "liberdade"],
+    "Indie Rock": ["memórias", "sonhos", "natureza", "silêncio"],
+    "Post-Rock": ["mistério", "tranquilidade", "reflexão", "sonhos"]
 }
 
 # ========== GERADOR MUSICAL CORRIGIDO ==========
