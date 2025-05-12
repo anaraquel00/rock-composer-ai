@@ -1,8 +1,8 @@
-import gradio as gr
+import gradio as gr # type: ignore
 import random
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
-# ========== BANCO DE DADOS MUSICAL ==========
+# ========== BANCO DE DADOS MUSICAL COMPLETO ==========
 BANDAS_ICONICAS = {
     "Metal/Death Metal": ["Cannibal Corpse", "Morbid Angel", "Death"],
     "Metal/Power Metal": ["Helloween", "Blind Guardian", "DragonForce"],
@@ -12,6 +12,9 @@ BANDAS_ICONICAS = {
     "Alternative Rock": ["Radiohead", "Nirvana", "The Smashing Pumpkins"],
     "Indie Rock": ["Arctic Monkeys", "Vampire Weekend", "Tame Impala"],
     "Post-Rock": ["Explosions in the Sky", "Godspeed You! Black Emperor", "Sigur Rós"]
+}
+
+ACORDES = {
 }
 
 PROGRESSOES = {
@@ -43,7 +46,12 @@ DICIONARIO_RIMAS = {
     "protesto": ["manifesto", "pretexto", "contexto"],
     "sociedade": ["realidade", "solidão", "liberdade"],
     "liberdade": ["idade", "verdade", "felicidade"],
-    "fantasia": ["melodia", "sinfonia", "harmonia"]
+    "fantasia": ["melodia", "sinfonia", "harmonia"],
+    "heróis": ["você", "nós", "pelo"],
+    "batalha": ["morte", "alma", "caminhada"],
+    "sangue": ["sangue", "luz", "som"],
+    "guerra": ["terra", "era", "espera"],
+    "desespero": ["zero", "espero", "mero"],
 }
 
 TEMAS_DETALHADOS = {
@@ -54,7 +62,7 @@ TEMAS_DETALHADOS = {
             "Espada ancestral",
             "Profecia celestial"
         ],
-        "verbos": [
+        "acoes": [
             "ergue o lábaro",
             "cruza o horizonte",
             "desafia o crepúsculo",
@@ -82,7 +90,7 @@ TEMAS_DETALHADOS = {
             "rompe as barreiras",
             "constrói um novo amanhã"
         ],
-        "elementos": [
+        "complementos": [
             "sistema opressor",
             "corrupção governamental",
             "luta pela verdade",
@@ -93,108 +101,123 @@ TEMAS_DETALHADOS = {
     },
     "Shoegaze": {
         "nucleos": ["memórias vivas", "sonhos perdidos", "natureza efêmera", "silêncio profundo"],
-        "verbos": ["flutua em lágrimas", "desvanece em mente", "abraça-me forte", "perde a consciência"],
-        "elementos": ["eterno amor", "infinito ao voar", "transcendente em brilho", "etéreo em luz"]
+        "verbos": ["flutua em lagrimas", "desvanece em mente", "abraça me forte", "perde a consciência"],
+        "complementos": ["eterno amor", "infinito ao voar", "transcendente em brilho", "etéreo em luz"]
     },
     "Dream Rock": {
         "nucleos": ["mistério da noite", "tranquilidade ao luar", "reflexão silenciosa", "sonhos profundos"],
         "verbos": ["dança nas estrelas", "sussurra alto", "me abraça", "persegue meu ego"],
-        "elementos": ["luz em minha cor", "sombras escuras", "universo paralelo", "tempo perdido"] 
+        "complementos": ["luz em minha cor", "sombras escuras", "universo paralelo", "tempo perdido"] 
     },
     "Alternative Rock": {
         "nucleos": ["rebelião desenfreada", "protesto sem graça", "sociedade corrompida", "liberdade de escolhas"],
         "verbos": ["grita alto", "desafia o sistema", "rompe barreiras", "constrói pontes"],
-        "elementos": ["sistema sitiado", "corrupção generalizada", "opressão controlada", "futuro sombrio"]
+        "complementos": ["sistema sitiado", "corrupção generalizada", "opressão controlada", "futuro sombrio"]
     },
     "Indie Rock": {
         "nucleos": ["memórias vivas", "sonhos sem nexo", "natureza morta", "silêncio abafado"],
         "verbos": ["flutua alto", "desvanece devagar", "abraça meus contos", "perde consciência"],
-        "elementos": ["eterno viver", "infinito calmo", "transcendente luar", "etéreo em cruz"]
+        "complementos": ["eterno viver", "infinito calmo", "transcendente luar", "etéreo em cruz"]
     },
     "Post-Rock": {
         "nucleos": ["mistério do tempo", "tranquilidade duvidada", "reflexão às avessas", "sonhos loucos"],
         "verbos": ["dança pra mim", "sussurra devagar", "abraça meu ar", "persegue meu ser"],
-        "elementos": ["luz nas sombras", "sombras vazias", "universo cósmico", "tempo passado"]
+        "complementos": ["luz nas sombras", "sombras vazias", "universo cosmico", "tempo passado"]
     }
+
+
+}
+# ========== TEMAS DE LETRA ATUALIZADOS ==========
+# Temas de letra para cada subgênero musical
+# Adicionando temas mais específicos e variados
+# para enriquecer a composição musical
+
+TEMAS_LETRA = {
+    "Metal/Death Metal": ["morte", "desespero", "sangue", "guerra"],
+    "Metal/Power Metal": ["fantasia", "heróis", "batalha", "luz"],
+    "Punk/Hardcore": ["rebelião", "sociedade", "protesto", "liberdade"],
+    "Shoegaze": ["amor", "solidão", "memórias", "sonhos"],
+    "Dream Rock": ["natureza", "mistério", "tranquilidade", "reflexão"],
+    "Alternative Rock": ["rebelião", "protesto", "sociedade", "liberdade"],
+    "Indie Rock": ["memórias", "sonhos", "natureza", "silêncio"],
+    "Post-Rock": ["mistério", "tranquilidade", "reflexão", "sonhos"]
 }
 
-# ========== GERADOR MUSICAL ==========
+# ========== GERADOR MUSICAL CORRIGIDO ==========
+def gerar_linha_poetica(tema: dict) -> str:
+   return f"{random.choice(tema['nucleos'])} {random.choice(tema['verbos'])} {random.choice(tema['complementos'])}"   
+def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
+    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
+    estrofe = []
+    
+    for _ in range(linhas):
+        linha = gerar_linha_poetica(tema)
+        estrofe.append(linha)
+    
+    return estrofe, tipo
+
 def gerar_rima(palavra: str, silabas: int = 3) -> str:
-    """Gera rima baseada na última palavra do verso"""
-    ultima_palavra = palavra.split()[-1].lower()
-    for chave, rimas in DICIONARIO_RIMAS.items():
-        if chave in ultima_palavra:
-            return random.choice(rimas)
-    return f"{palavra}..."
+    sufixos = {
+        2: palavra[-2:],
+        3: palavra[-3:],
+        4: palavra[-4:]
+    }
+    return random.choice(DICIONARIO_RIMAS.get(sufixos[silabas], [palavra]))
 
 def validar_linha(nova_linha: str, linhas_existentes: list) -> bool:
-    """Valida linha evitando repetições excessivas"""
     palavras = nova_linha.split()
-    return (
-        all(palavras.count(p) < 2 for p in palavras) and 
-        nova_linha not in linhas_existentes
-    )
+    return not any(
+        palavras.count(palavra) > 2 for palavra in palavras
+    ) and nova_linha not in linhas_existentes
 
 def gerar_estrofe_modernizada(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
-    """Gera estrofe com estrutura coerente"""
     tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
-    esquema = random.choice(["ABAB", "AABA", "ABCB"])
+    esquema = random.choice(["ABAB", "AABA", "ABCD"])
     
     frases = []
-    rimas = {}
+    ultimas_rimas = {}
     
     for i in range(linhas):
-        while True:
-            # Gera linha base combinando elementos temáticos
-            sujeito = random.choice(tema['nucleos'])
-            verbo = random.choice(tema['verbos'])
-            complemento = random.choice(tema['elementos'])
-            nova_linha = f"{sujeito} {verbo} {complemento}"
-            
-            # Aplica esquema de rimas
-            if esquema == "ABAB" and i % 2 == 0:
-                if i > 1:
-                    nova_linha += f" {gerar_rima(rimas[i%2])}"
-            elif esquema == "AABA" and i == 3:
-                nova_linha += f" {gerar_rima(rimas[0])}"
-            
-            if validar_linha(nova_linha, frases):
-                break
-                
+        # Gera linha baseada na estrutura poética
+        nova_linha = gerar_linha_poetica(tema)
+        
+        # Aplica sistema de rimas
+        if esquema in ["ABAB", "AABA"]:
+            if i in [0, 2] and esquema == "ABAB":
+                rima_alvo = ultimas_rimas.get(0, nova_linha.split()[-1])
+                nova_linha = gerar_rima(rima_alvo, silabas=3) + " " + nova_linha
+            elif i == 3 and esquema == "AABA":
+                nova_linha = gerar_rima(ultimas_rimas[0], silabas=3) + " " + nova_linha
+        
         frases.append(nova_linha.capitalize())
-        rimas[i] = nova_linha.split()[-1]
+        ultimas_rimas[i] = nova_linha.split()[-1]
     
     return frases, esquema
 
 def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str]:
-    """Gera música completa com estrutura coerente"""
+    # Parte 1: Elementos estruturais
     partes = {}
-    esquema_geral = ""
+    estruturas = ["intro", "verso", "refrao", "ponte"]
     
-    # Gera cada parte da música
-    for parte in ["intro", "verso", "refrao", "ponte"]:
-        linhas = 6 if parte == "refrao" else 4
-        frases, esquema = gerar_estrofe_modernizada(subgenero, parte, linhas)
+    for parte in estruturas:
+        linhas = 4 if parte != "refrao" else 6
+        frases, esquema = gerar_estrofe(subgenero, parte, linhas)
         partes[parte] = "\n".join(frases)
-        esquema_geral = esquema
     
-    # Montagem final da letra
-    letra_formatada = (
-        f"INTRO ({esquema_geral}):\n{partes['intro']}\n\n"
-        f"VERSO:\n{partes['verso']}\n\n"
-        f"REFRAO:\n{partes['refrao']}\n\n"
-        f"PONTE:\n{partes['ponte']}"
-    )
+    # Parte 2: Elementos técnicos
+    banda_ref = random.choice(BANDAS_ICONICAS[subgenero])
+    acordes = " | ".join(random.sample(PROGRESSOES[subgenero], 3))
+    bpm = str(random.randint(80, 200)) + " BPM"
     
-    # Elementos técnicos
-    return (
-        greet(nome),
-        random.choice(BANDAS_ICONICAS[subgenero]),
-        " | ".join(random.sample(PROGRESSOES[subgenero], 3)),
-        letra_formatada
-    )
+    # Parte 3: Montagem da letra
+    letra_formatada = f"""INTRO ({esquema}):\n{partes['intro']}\n\n
+VERSO:\n{partes['verso']}\n\n
+REFRAO:\n{partes['refrao']}\n\n
+PONTE:\n{partes['ponte']}"""
+    
+    return banda_ref, acordes, letra_formatada
 
-# ========== INTERFACE ==========
+# ========== INTERFACE ATUALIZADA ==========
 with gr.Blocks(theme=gr.themes.Soft(primary_hue="red")) as app:
     gr.Markdown("# 🤖🎸 **Assistente de Composição Musical**")
     
