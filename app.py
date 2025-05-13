@@ -243,6 +243,7 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue")) as app:
         referencia = gr.Textbox(label="Banda Referência")
         acordes = gr.Textbox(label="Progressão de Acordes")
         letra = gr.Textbox(label="Letra Completa", lines=15)
+        letra_banda = gr.Textbox(label="Letra da Banda Referência", lines=15)
     btn.click(
         fn=gerar_musica_completa,
         inputs=[nome, subgenero],
