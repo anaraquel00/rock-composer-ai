@@ -10,10 +10,10 @@ import lyricsgenius.types.song  # type: ignore
 import lyricsgenius.types.album  # type: ignore
 
 # Adicione sua API Key do Genius aqui
-GENIUS_API_KEY = "BXgdS_8Op2OWqlp1_KBo9knbI2pYzGyvn2fd4hJLbJwz8_gX55Tt4mltrymG6nBh"
+GENIUS_API_KEY = "sSa-NaHFpfLFcIbKSTICM0z2GVutBfEWURsiwuogtMjaWH0rmBGHLUP56yPUYXnG"
 
 # Inicializa o cliente Genius
-genius = lyricsgenius.Genius("BXgdS_8Op2OWqlp1_KBo9knbI2pYzGyvn2fd4hJLbJwz8_gX55Tt4mltrymG6nBh")
+genius = lyricsgenius.Genius("sSa-NaHFpfLFcIbKSTICM0z2GVutBfEWURsiwuogtMjaWH0rmBGHLUP56yPUYXnG")
 
 # ========== BANCO DE DADOS MUSICAL COMPLETO ==========
 BANDAS_ICONICAS = {
