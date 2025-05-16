@@ -61,12 +61,12 @@ sequenceDiagram
     app.py->>+temas_detalhados.py: Busca temas relacionados
     app.py-->>-Usuário: Retorna letra completa
 ```    
-Arquivos Principais
-
-Arquivo	Função
-app.py	Interface Gradio e lógica principal
-dicionario_rimas.py	Gerencia padrões ABAB, AABB, etc.
-temas_detalhados.py	Banco de temas pré-definidos
+### Arquivos Principais
+| Arquivo               | Função                             |
+|-----------------------|------------------------------------|
+| `app.py`              | Interface Gradio e lógica principal |
+| `dicionario_rimas.py` | Gerencia padrões ABAB, AABB, etc.  |
+| `temas_detalhados.py` | Banco de temas pré-definidos       |
 
 # 🎨 Guia de Prompts
 
