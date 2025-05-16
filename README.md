@@ -23,9 +23,11 @@ flowchart TB
     A[Python] --> B[Gradio]
     A --> C[Transformers]
     D[Prompts estruturados] --> E[Letras personalizadas]
+```    
 
 
-📦 Estrutura do Projeto
+# 📦 Estrutura do Projeto
+
 ```bash
 rock-composer-ai/
 ├── src/              # Código-fonte
@@ -40,7 +42,7 @@ rock-composer-ai/
 └── requirements.txt  # Dependências
 ```
 
-🚀 Começando
+# 🚀 Começando
 
 ```bash
 git clone https://huggingface.co/spaces/ana99/rock-composer-ai
@@ -48,7 +50,7 @@ cd rock-composer-ai
 pip install -r requirements.txt
 python src/app.py
 ```
-📚 Documentação Técnica
+# 📚 Documentação Técnica
 
 Fluxo de Geração
 
@@ -66,7 +68,7 @@ app.py	Interface Gradio e lógica principal
 dicionario_rimas.py	Gerencia padrões ABAB, AABB, etc.
 temas_detalhados.py	Banco de temas pré-definidos
 
-🎨 Guia de Prompts
+# 🎨 Guia de Prompts
 
 Exemplo mínimo:
 ```json
@@ -84,13 +86,13 @@ Inclua verbos de ação ("esmagar", "gritar")
 
 Referencie objetos concretos ("garrafa quebrada")
 
-⚖️ Direitos Autorais
+# ⚖️ Direitos Autorais
 
 Letras geradas são de domínio público
 
 Atribua o projeto se usar comercialmente
 
-🤝 Como Contribuir
+# 🤝 Como Contribuir
 
 Faça um fork do projeto
 
@@ -102,7 +104,7 @@ Push para a branch (git push origin feature/novo-recurso)
 
 Abra um Pull Request
 
-📬 Contato
+# 📬 Contato
 
 Ana Raquel - @anaraquel00
 Projeto no Hugging Face: Rock Composer AI
