@@ -1,19 +1,51 @@
-import gradio as gr # type: ignore
-import random
-from typing import Dict, List, Tuple
-from dicionario_rimas import DICIONARIO_RIMAS
-from temas_detalhados import TEMAS_DETALHADOS
-from instrucoes_estilisticas import INSTRUCOES_ESTILISTICAS
+"""
+Rock Composer AI - Aplicação principal integrada com bibliotecas aprimoradas
+Versão atualizada que aproveita todas as novas funcionalidades
+"""
 
-from lyricsgenius import Genius
-import lyricsgenius.types.song  # type: ignore
-import lyricsgenius.types.album  # type: ignore
+import gradio as gr  # type: ignore
+import random
+from typing import Dict, List, Tuple, Any, Optional
+
+# Importação das bibliotecas aprimoradas
+from dicionario_rimas import (
+    DICIONARIO_RIMAS, 
+    obter_rimas, 
+    obter_vocabulario_genero, 
+    gerar_rima,
+    obter_rimas_por_sufixo
+)
+from temas_detalhados import (
+    TEMAS_DETALHADOS, 
+    obter_temas_detalhados, 
+    gerar_combinacao_tematica, 
+    gerar_tema_completo
+)
+from instrucoes_estilisticas import (
+    INSTRUCOES_ESTILISTICAS, 
+    obter_instrucoes_estilisticas, 
+    obter_caracteristicas_genero, 
+    gerar_estrutura_musica
+)
+
+# Instalação do lyricsgenius se necessário
+try:
+    from lyricsgenius import Genius
+    import lyricsgenius.types.song  # type: ignore
+    import lyricsgenius.types.album  # type: ignore
+except ImportError:
+    import sys
+    import subprocess
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "lyricsgenius"])
+    from lyricsgenius import Genius
+    import lyricsgenius.types.song  # type: ignore
+    import lyricsgenius.types.album  # type: ignore
 
 # Adicione sua API Key do Genius aqui
 GENIUS_API_KEY = "sSa-NaHFpfLFcIbKSTICM0z2GVutBfEWURsiwuogtMjaWH0rmBGHLUP56yPUYXnG"
 
 # Inicializa o cliente Genius
-genius = lyricsgenius.Genius("sSa-NaHFpfLFcIbKSTICM0z2GVutBfEWURsiwuogtMjaWH0rmBGHLUP56yPUYXnG")
+genius = Genius(GENIUS_API_KEY)
 
 # ========== BANCO DE DADOS MUSICAL COMPLETO ==========
 BANDAS_ICONICAS = {
@@ -38,92 +70,24 @@ ACORDES = {
     "Post-Rock": ["Cmaj", "Gmaj", "Dmaj", "Amin", "Emin"]
 }
 
-
-PROGRESSOES = {
-    "Metal/Death Metal": [
-        {"progressao": "i-VII-VI", "emocoes": "sombrio, intenso", "caracteristicas": "riffs pesados, atmosfera obscura"},
-        {"progressao": "i-VIIb-V", "emocoes": "agressivo, caótico", "caracteristicas": "ritmos rápidos, dissonância"},
-        {"progressao": "i-VI-iv-V", "emocoes": "melancólico, épico", "caracteristicas": "melodias lentas, tensão crescente"},
-        {"progressao": "Phrygian Dominant", "emocoes": "exótico, ameaçador", "caracteristicas": "escalas orientais, intensidade"},
-        {"progressao": "i-bII-i", "emocoes": "opressor, sombrio", "caracteristicas": "mudanças abruptas, peso"},
-        {"progressao": "i-VI-VII-V", "emocoes": "épico, grandioso", "caracteristicas": "dinâmica crescente, solos técnicos"}
-    ],
-    "Metal/Power Metal": [
-        {"progressao": "I-V-vi-IV", "emocoes": "heróico, otimista", "caracteristicas": "melodias épicas, coros"},
-        {"progressao": "IV-V-I", "emocoes": "triunfante, energético", "caracteristicas": "ritmos rápidos, refrões marcantes"},
-        {"progressao": "I-iii-IV-V", "emocoes": "emocionante, aventureiro", "caracteristicas": "harmonias ricas, solos"},
-        {"progressao": "vi-IV-I-V", "emocoes": "esperançoso, inspirador", "caracteristicas": "progressão fluida, melodia"},
-        {"progressao": "I-VI-IV-V", "emocoes": "épico, grandioso", "caracteristicas": "crescendos, coros"},
-        {"progressao": "I-IV-V-vi", "emocoes": "dinâmico, vibrante", "caracteristicas": "mudanças rápidas, energia"}
-    ],
-    "Punk/Hardcore": [
-        {"progressao": "I-IV-V", "emocoes": "rebelde, direto", "caracteristicas": "riffs simples, energia crua"},
-        {"progressao": "I-V-vi-IV", "emocoes": "intenso, emocional", "caracteristicas": "ritmos rápidos, letras diretas"},
-        {"progressao": "IV-V-I-IV", "emocoes": "agressivo, energético", "caracteristicas": "power chords, refrões"},
-        {"progressao": "Power chords", "emocoes": "cru, explosivo", "caracteristicas": "simples, impacto imediato"},
-        {"progressao": "I-V-IV", "emocoes": "urgente, intenso", "caracteristicas": "ritmos rápidos, simplicidade"},
-        {"progressao": "I-IV-I-V", "emocoes": "protesto, direto", "caracteristicas": "energia constante, repetição"}
-    ],
-    "Shoegaze": [
-        {"progressao": "I-iii-IV", "emocoes": "sonhador, introspectivo", "caracteristicas": "camadas de som, reverb"},
-        {"progressao": "I-V-vi-iii", "emocoes": "melancólico, etéreo", "caracteristicas": "harmonias suaves, atmosfera"},
-        {"progressao": "IV-vi-I-V", "emocoes": "calmo, reflexivo", "caracteristicas": "texturas densas, melodia"},
-        {"progressao": "Maj7/add9", "emocoes": "etéreo, flutuante", "caracteristicas": "acordes ricos, reverb"},
-        {"progressao": "I-V-IV-iii", "emocoes": "nostálgico, suave", "caracteristicas": "melodias lentas, harmonia"},
-        {"progressao": "ii-IV-I-V", "emocoes": "tranquilo, expansivo", "caracteristicas": "progressão fluida, atmosfera"}
-    ],
-    "Dream Rock": [
-        {"progressao": "ii-V-I", "emocoes": "suave, relaxante", "caracteristicas": "melodias limpas, harmonia"},
-        {"progressao": "IV-I-V-vi", "emocoes": "sonhador, introspectivo", "caracteristicas": "texturas suaves, melodia"},
-        {"progressao": "I-vi-IV-V", "emocoes": "esperançoso, emocional", "caracteristicas": "progressão fluida, harmonia"},
-        {"progressao": "ii-IV-I-V", "emocoes": "calmo, expansivo", "caracteristicas": "melodias suaves, atmosfera"},
-        {"progressao": "I-V-vi-IV", "emocoes": "nostálgico, inspirador", "caracteristicas": "harmonias ricas, melodia"},
-        {"progressao": "IV-ii-I-V", "emocoes": "etéreo, introspectivo", "caracteristicas": "texturas densas, reverb"}
-    ],
-    "Alternative Rock": [
-        {"progressao": "I-IV-V", "emocoes": "energético, cativante", "caracteristicas": "riffs marcantes, refrões"},
-        {"progressao": "I-vi-IV-V", "emocoes": "emocional, dinâmico", "caracteristicas": "mudanças de tom, melodia"},
-        {"progressao": "IV-I-V-vi", "emocoes": "introspectivo, vibrante", "caracteristicas": "harmonias ricas, energia"},
-        {"progressao": "I-V-vi-IV", "emocoes": "esperançoso, emocional", "caracteristicas": "progressão fluida, melodia"},
-        {"progressao": "ii-V-I", "emocoes": "suave, reflexivo", "caracteristicas": "melodias limpas, harmonia"},
-        {"progressao": "I-IV-ii-V", "emocoes": "dinâmico, cativante", "caracteristicas": "mudanças rápidas, energia"}
-    ],
-    "Indie Rock": [
-        {"progressao": "I-IV-V", "emocoes": "nostálgico, cativante", "caracteristicas": "riffs simples, melodia"},
-        {"progressao": "I-vi-IV-V", "emocoes": "emocional, introspectivo", "caracteristicas": "harmonias suaves, melodia"},
-        {"progressao": "IV-I-V-vi", "emocoes": "sonhador, suave", "caracteristicas": "texturas limpas, reverb"},
-        {"progressao": "I-V-vi-IV", "emocoes": "esperançoso, vibrante", "caracteristicas": "progressão fluida, energia"},
-        {"progressao": "ii-IV-I-V", "emocoes": "calmo, introspectivo", "caracteristicas": "melodias suaves, harmonia"},
-        {"progressao": "I-V-IV-vi", "emocoes": "etéreo, reflexivo", "caracteristicas": "texturas densas, melodia"}
-    ],
-    "Post-Rock": [
-        {"progressao": "I-IV-V", "emocoes": "épico, expansivo", "caracteristicas": "crescendo lento, camadas"},
-        {"progressao": "I-vi-IV-V", "emocoes": "melancólico, introspectivo", "caracteristicas": "texturas densas, melodia"},
-        {"progressao": "IV-I-V-vi", "emocoes": "sonhador, etéreo", "caracteristicas": "harmonias suaves, reverb"},
-        {"progressao": "I-V-vi-IV", "emocoes": "esperançoso, emocional", "caracteristicas": "progressão fluida, melodia"},
-        {"progressao": "ii-V-I", "emocoes": "calmo, reflexivo", "caracteristicas": "melodias limpas, harmonia"},
-        {"progressao": "I-IV-ii-V", "emocoes": "dinâmico, expansivo", "caracteristicas": "crescendo, texturas"}
-    ]
-}
+# Utilizamos a constante PROGRESSOES diretamente das instruções estilísticas aprimoradas
+PROGRESSOES = {genero: instrucoes for genero, instrucoes in INSTRUCOES_ESTILISTICAS.items()}
 
 # ========== TEMAS DE LETRA ATUALIZADOS ==========
-# Temas de letra para cada subgênero musical
-# Adicionando temas mais específicos e variados
-# para enriquecer a composição musical
-
-TEMAS_LETRA = {
-    "Metal/Death Metal": ["morte", "desespero", "sangue", "guerra"],
-    "Metal/Power Metal": ["fantasia", "heróis", "batalha", "luz"],
-    "Punk/Hardcore": ["rebelião", "sociedade", "protesto", "liberdade"],
-    "Shoegaze": ["amor", "solidão", "memórias", "sonhos"],
-    "Dream Rock": ["natureza", "mistério", "tranquilidade", "reflexão"],
-    "Alternative Rock": ["rebelião", "protesto", "sociedade", "liberdade"],
-    "Indie Rock": ["memórias", "sonhos", "natureza", "silêncio"],
-    "Post-Rock": ["mistério", "tranquilidade", "reflexão", "sonhos"]
-}
+# Utilizamos os temas detalhados aprimorados
+TEMAS_LETRA = {genero: temas for genero, temas in TEMAS_DETALHADOS.items()}
 
 # Função para buscar letras de músicas
 def buscar_letra(banda: str) -> str:
+    """
+    Busca letras de músicas de uma banda específica usando a API do Genius.
+    
+    Args:
+        banda (str): Nome da banda para buscar letras.
+        
+    Returns:
+        str: Letra da música encontrada ou mensagem de erro.
+    """
     try:
         print(f"Buscando letras para a banda: {banda}")
         song = genius.search_artist(banda, max_songs=1, sort="popularity").songs[0]
@@ -132,105 +96,288 @@ def buscar_letra(banda: str) -> str:
         print(f"Erro ao buscar letras: {e}")
         return "Não foi possível encontrar letras para esta banda."
 
-# ========== GERADOR MUSICAL CORRIGIDO ==========
-# Função auxiliar para gerar linha poética
-def gerar_linha_poetica(tema: Dict[str, List[str]]) -> str:
-    # Certifique-se de que as listas não estão vazias antes de escolher
-    nucleos = random.choice(tema.get("nucleos", ["tema padrão"]))
-    acoes = random.choice(tema.get("acoes", ["ação padrão"]))
-    elementos = random.choice(tema.get("elementos", ["elemento padrão"]))
-    return f"{nucleos} {acoes} {elementos}"
-
-# Função para gerar rima com validação de comprimento
-def gerar_rima(palavra: str, silabas: int = 3) -> str:
-    if len(palavra) < silabas:
-        return palavra
-    sufixos = {
-        2: palavra[-2:],
-        3: palavra[-3:],
-        4: palavra[-4:]
-    }
-    return random.choice(DICIONARIO_RIMAS.get(sufixos[silabas], [palavra]))
+# Função auxiliar para gerar linha poética aprimorada
+def gerar_linha_poetica(tema: Dict[str, Any]) -> str:
+    """
+    Versão aprimorada da função para gerar linha poética.
+    Utiliza o tema completo com múltiplos elementos.
+    
+    Args:
+        tema (dict): Dicionário contendo elementos temáticos.
+        
+    Returns:
+        str: Linha poética gerada.
+    """
+    # Verificar se temos os elementos básicos
+    elementos_basicos = ["nucleos", "acoes", "elementos"]
+    for elemento in elementos_basicos:
+        if elemento not in tema:
+            # Gerar elemento faltante
+            if elemento == "nucleos" and "Metal/Power Metal" in TEMAS_DETALHADOS:
+                tema[elemento] = random.choice(TEMAS_DETALHADOS["Metal/Power Metal"]["nucleos"])
+            elif elemento == "acoes" and "Metal/Power Metal" in TEMAS_DETALHADOS:
+                tema[elemento] = random.choice(TEMAS_DETALHADOS["Metal/Power Metal"]["acoes"])
+            elif elemento == "elementos" and "Metal/Power Metal" in TEMAS_DETALHADOS:
+                tema[elemento] = random.choice(TEMAS_DETALHADOS["Metal/Power Metal"]["elementos"])
+    
+    # Construir a linha poética
+    linha = f"{tema['nucleos']} {tema['acoes']} {tema['elementos']}"
+    
+    # Adicionar elementos adicionais se disponíveis
+    if "personagens" in tema:
+        linha += f", {tema['personagens']}"
+    if "emocoes" in tema:
+        linha += f" com {tema['emocoes']}"
+    
+    return linha.capitalize()
 
 # Função para validar linha
-def validar_linha(nova_linha: str, linhas_existentes: list) -> bool:
+def validar_linha(nova_linha: str, linhas_existentes: List[str]) -> bool:
+    """
+    Verifica se uma nova linha é válida e não duplicada.
+    
+    Args:
+        nova_linha (str): Linha a ser validada.
+        linhas_existentes (list): Lista de linhas existentes.
+        
+    Returns:
+        bool: True se a linha for válida, False caso contrário.
+    """
     palavras = nova_linha.split()
+    
+    # Verifica se há palavras repetidas na mesma linha
     return not any(
         palavras.count(palavra) > 2 for palavra in palavras
     ) and nova_linha not in linhas_existentes
 
-# Função para gerar estrofe
+# Função para gerar estrofe aprimorada
 def gerar_estrofe(subgenero: str, tipo: str, linhas: int) -> Tuple[List[str], str]:
-    # Use um tema padrão caso o subgênero não seja encontrado
-    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
+    """
+    Versão aprimorada da função para gerar estrofe.
+    Utiliza as novas funções de geração de temas e combinações.
     
-    # Verifique se o tema possui as chaves necessárias
-    if not all(key in tema for key in ["nucleos", "acoes", "elementos"]):
-        tema = TEMAS_DETALHADOS["Metal/Power Metal"]  # Fallback para tema padrão
+    Args:
+        subgenero (str): Subgênero musical.
+        tipo (str): Tipo de estrofe (verso, refrão, etc).
+        linhas (int): Número de linhas na estrofe.
+        
+    Returns:
+        tuple: Lista de linhas da estrofe e tipo da estrofe.
+    """
+    # Usar tema padrão caso o subgênero não seja encontrado
+    if subgenero not in TEMAS_DETALHADOS:
+        subgenero = "Metal/Power Metal"
+    
+    # Obter características do estilo para o tipo de estrofe
+    instrucoes = obter_instrucoes_estilisticas(subgenero, tipo) if tipo in ["intro", "verso", "refrao", "ponte"] else {}
     
     estrofe = []
+    
+    # Gerar linhas únicas para a estrofe
     for _ in range(linhas):
         while True:
+            # Gerar tema completo para linha mais rica
+            tema = gerar_tema_completo(subgenero)
             linha = gerar_linha_poetica(tema).capitalize()
-            if validar_linha(linha, estrofe):  # Verifica se a linha é única
+            
+            if validar_linha(linha, estrofe):
                 estrofe.append(linha)
                 break
+    
     return estrofe, tipo
 
 # Função para gerar estrofe modernizada
 def gerar_estrofe_modernizada(subgenero: str, linhas: int) -> Tuple[List[str], str]:
-    tema = TEMAS_DETALHADOS.get(subgenero, TEMAS_DETALHADOS["Metal/Power Metal"])
-    esquema = random.choice(["ABAB", "AABA", "ABCD"])
+    """
+    Versão aprimorada da função para gerar estrofe modernizada.
+    Utiliza esquemas de rima mais sofisticados.
+    
+    Args:
+        subgenero (str): Subgênero musical.
+        linhas (int): Número de linhas na estrofe.
+        
+    Returns:
+        tuple: Lista de frases da estrofe e esquema utilizado.
+    """
+    # Usar tema padrão caso o subgênero não seja encontrado
+    if subgenero not in TEMAS_DETALHADOS:
+        subgenero = "Metal/Power Metal"
+    
+    # Escolher esquema de rima
+    esquemas = ["ABAB", "AABA", "ABCD"]
+    esquema = random.choice(esquemas)
+    
     frases = []
     ultimas_rimas = {}
+    
+    # Gerar tema completo para contexto consistente
+    tema_base = gerar_tema_completo(subgenero)
+    
     for i in range(linhas):
-        nova_linha = gerar_linha_poetica(tema)
-        if esquema in ["ABAB", "AABA"]:
-            if i in [0, 2] and esquema == "ABAB":
-                rima_alvo = ultimas_rimas.get(0, nova_linha.split()[-1])
-                nova_linha = gerar_rima(rima_alvo, silabas=3) + " " + nova_linha
-            elif i == 3 and esquema == "AABA":
-                nova_linha = gerar_rima(ultimas_rimas[0], silabas=3) + " " + nova_linha
+        # Determinar qual padrão de rima seguir para esta linha
+        padrao_atual = esquema[i % len(esquema)]
+        
+        # Gerar linha poética base
+        nova_linha = gerar_linha_poetica(tema_base)
+        
+        # Se este padrão já tem uma rima estabelecida, tentar usar
+        if padrao_atual in ultimas_rimas:
+            rima_alvo = ultimas_rimas[padrao_atual]
+            palavras = nova_linha.split()
+            
+            if palavras:
+                # Tentar gerar uma rima para a última palavra
+                ultima_palavra = palavras[-1]
+                rima = gerar_rima(rima_alvo, silabas=3)
+                
+                # Substituir a última palavra pela rima
+                nova_linha = " ".join(palavras[:-1] + [rima])
+        
+        # Armazenar a última palavra para futuras rimas do mesmo padrão
+        palavras = nova_linha.split()
+        if palavras:
+            ultimas_rimas[padrao_atual] = palavras[-1]
+        
         frases.append(nova_linha.capitalize())
-        ultimas_rimas[i] = nova_linha.split()[-1]
+    
     return frases, esquema
 
-# Função para gerar música completa
+# Função para gerar música completa aprimorada
 def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str]:
+    """
+    Versão aprimorada da função para gerar música completa.
+    Utiliza estrutura musical dinâmica e todas as novas funcionalidades.
+    
+    Args:
+        nome (str): Nome para a música.
+        subgenero (str): Subgênero musical.
+        
+    Returns:
+        tuple: Banda de referência, acordes, letra formatada e letra da banda de referência.
+    """
     print(f"Gerando música para o subgênero: {subgenero}")
+    
+    # Obter características do gênero
+    caracteristicas = obter_caracteristicas_genero(subgenero)
+    print(f"Características estilísticas carregadas: {caracteristicas}")
+    
+    # Gerar estrutura musical com complexidade média
+    estrutura = gerar_estrutura_musica(subgenero, complexidade=2)
+    print(f"Estrutura musical gerada: {estrutura}")
+    
+    # Preparar partes da música
     partes = {}
     esquemas = {}
-    instrucoes = INSTRUCOES_ESTILISTICAS.get(subgenero, {})
-    print(f"Instruções estilísticas carregadas: {instrucoes}")
-    estruturas = ["intro", "verso", "refrao", "ponte"]
-    for parte in estruturas:
-        linhas = 4 if parte != "refrao" else 6
-        frases, esquema = gerar_estrofe(subgenero, parte, linhas)
-        descricao = instrucoes.get(parte, "Descrição não disponível")
-        partes[parte] = f"[{descricao}]\n" + "\n".join(frases)
-        esquemas[parte] = esquema
-    banda_ref = random.choice(BANDAS_ICONICAS.get(subgenero, ["Banda Desconhecida"]))
-    print(f"Banda referência: {banda_ref}")
-    acordes = " | ".join(random.sample(
-        [p["progressao"] for p in PROGRESSOES.get(subgenero, PROGRESSOES["Metal/Power Metal"])],
-        3
-    ))
-    bpm = str(random.randint(80, 200)) + " BPM"
-    letra_formatada = f"""INTRO:\n{partes['intro']}\n\n
-VERSO:\n{partes['verso']}\n\n
-REFRAO:\n{partes['refrao']}\n\n
-PONTE:\n{partes['ponte']}"""
     
-    # Busca a letra de uma música da banda referência
+    # Obter instruções estilísticas específicas
+    instrucoes = obter_instrucoes_estilisticas(subgenero)
+    print(f"Instruções estilísticas carregadas: {len(instrucoes) if instrucoes else 0} itens")
+    
+    # Gerar cada parte da estrutura
+    for parte in estrutura:
+        if parte == "intro":
+            linhas = 4
+        elif parte == "verso":
+            linhas = 8
+        elif parte == "refrao":
+            linhas = 4
+        elif parte == "ponte":
+            linhas = 4
+        elif parte == "solo":
+            linhas = 0  # Instrumental
+        elif parte == "outro":
+            linhas = 2
+        else:
+            linhas = 4
+        
+        # Pular partes instrumentais
+        if linhas == 0:
+            partes[parte] = ["[Instrumental]"]
+            esquemas[parte] = "Instrumental"
+            continue
+        
+        # Usar estrofe modernizada para refrão, estrofe normal para o resto
+        if parte == "refrao":
+            frases, esquema = gerar_estrofe_modernizada(subgenero, linhas)
+        else:
+            frases, esquema = gerar_estrofe(subgenero, parte, linhas)
+        
+        partes[parte] = frases
+        esquemas[parte] = esquema
+    
+    # Escolher banda de referência
+    if subgenero in BANDAS_ICONICAS:
+        banda_ref = random.choice(BANDAS_ICONICAS[subgenero])
+    else:
+        banda_ref = "Banda Desconhecida"
+    
+    print(f"Banda referência: {banda_ref}")
+    
+    # Gerar progressão de acordes
+    acordes = " | "
+    if subgenero in ACORDES:
+        acordes_disponiveis = ACORDES[subgenero]
+        # Selecionar progressão de acordes baseada nas características do gênero
+        if subgenero in PROGRESSOES:
+            progressoes_disponiveis = []
+            for p in PROGRESSOES[subgenero]:
+                if isinstance(p, dict) and "progressao" in p:
+                    progressoes_disponiveis.append(p["progressao"])
+            
+            if progressoes_disponiveis:
+                acordes += " | ".join([
+                    random.choice(progressoes_disponiveis) 
+                    for _ in range(3)
+                ])
+            else:
+                acordes += " | ".join([
+                    random.choice(acordes_disponiveis) 
+                    for _ in range(3)
+                ])
+        else:
+            acordes += " | ".join([
+                random.choice(acordes_disponiveis) 
+                for _ in range(3)
+            ])
+    
+    # Gerar BPM baseado nas características do gênero
+    bpm = str(random.randint(80, 200)) + " BPM"
+    if "caracteristicas_gerais" in instrucoes and "bpm_recomendado" in instrucoes["caracteristicas_gerais"]:
+        bpm_range = instrucoes["caracteristicas_gerais"]["bpm_recomendado"]
+        bpm = bpm_range  # Usar o range recomendado diretamente
+    
+    # Formatar a letra
+    letra_formatada = f"""INTRO:\n{'\n'.join(partes['intro'])}\n\n"""
+    
+    # Adicionar as partes na ordem da estrutura
+    for parte in estrutura:
+        if parte == "intro":
+            continue  # Já adicionado
+        
+        parte_nome = parte.upper()
+        if parte == "verso":
+            parte_nome = "VERSO"
+        elif parte == "refrao":
+            parte_nome = "REFRÃO"
+        elif parte == "ponte":
+            parte_nome = "PONTE"
+        elif parte == "pre_refrao":
+            parte_nome = "PRÉ-REFRÃO"
+        elif parte == "outro":
+            parte_nome = "OUTRO"
+        
+        letra_formatada += f"{parte_nome}:\n{'\n'.join(partes[parte])}\n\n"
+    
+    # Buscar letra de uma música da banda referência
     letra_banda = buscar_letra(banda_ref)
-
-    # Retorna os valores
+    
+    # Retornar os valores
     return banda_ref, acordes, letra_formatada, letra_banda
-
 
 # Interface Gradio
 with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue")) as app:
-    gr.Markdown("# 🤖🎸 **Jo Cyborg - IA Compositora**")
+    gr.Markdown("# 🎸 **Jo Cyborg - IA Compositora**")
+    
     with gr.Row():
         nome = gr.Textbox(label="Seu Nome", value="Raquel")
         subgenero = gr.Dropdown(
@@ -238,12 +385,15 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue")) as app:
             choices=list(BANDAS_ICONICAS.keys()),
             value="Metal/Power Metal"
         )
+    
     btn = gr.Button("Criar Música", variant="primary")
+    
     with gr.Column():
         referencia = gr.Textbox(label="Banda Referência")
         acordes = gr.Textbox(label="Progressão de Acordes")
         letra = gr.Textbox(label="Letra Completa", lines=15)
         letra_banda = gr.Textbox(label="Letra da Banda Referência", lines=15)
+    
     btn.click(
         fn=gerar_musica_completa,
         inputs=[nome, subgenero],
@@ -251,4 +401,3 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue")) as app:
     )
     
     app.launch()
-
