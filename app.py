@@ -3,7 +3,7 @@ Rock Composer AI - Aplicação principal integrada com bibliotecas aprimoradas
 Versão atualizada que aproveita todas as novas funcionalidades
 """
 
-import gradio as gr  # type: ignore
+import gradio as gr  
 import random
 from typing import Dict, List, Tuple, Any, Optional
 
