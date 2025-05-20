@@ -30,7 +30,7 @@ from instrucoes_estilisticas import (
 
 # Instalação do lyricsgenius se necessário
 try:
-    from lyricsgenius import Genius
+    from lyricsgenius import Genius 
     import lyricsgenius.types.song  # type: ignore
     import lyricsgenius.types.album  # type: ignore
 except ImportError:

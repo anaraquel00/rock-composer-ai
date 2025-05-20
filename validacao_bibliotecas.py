@@ -264,6 +264,10 @@ def test_integration():
     
     print_subheader("Simulando geração de música completa")
     
+    if temas is None:
+        print_error("O módulo temas_detalhados_aprimorado não foi importado corretamente.")
+        return False
+
     try:
         # Selecionar gênero aleatório
         generos = list(temas.TEMAS_DETALHADOS.keys())
@@ -274,23 +278,28 @@ def test_integration():
         tema_completo = temas.gerar_tema_completo(genero)
         print(f"Tema gerado com {len(tema_completo)} elementos")
         
-        # Obter estrutura musical
-        estrutura = instrucoes.gerar_estrutura_musica(genero, 2)
-        print(f"Estrutura musical com {len(estrutura)} partes: {', '.join(estrutura)}")
-        
-        # Obter características do gênero
-        caracteristicas = instrucoes.obter_caracteristicas_genero(genero)
-        print(f"BPM recomendado: {caracteristicas.get('bpm_recomendado', 'N/A')}")
-        print(f"Afinação recomendada: {caracteristicas.get('afinacao_recomendada', 'N/A')}")
+        # Obter estrutura musical e características do gênero, se instrucoes não for None
+        if instrucoes is not None:
+            estrutura = instrucoes.gerar_estrutura_musica(genero, 2)
+            print(f"Estrutura musical com {len(estrutura)} partes: {', '.join(estrutura)}")
+            
+            caracteristicas = instrucoes.obter_caracteristicas_genero(genero)
+            print(f"BPM recomendado: {caracteristicas.get('bpm_recomendado', 'N/A')}")
+            print(f"Afinação recomendada: {caracteristicas.get('afinacao_recomendada', 'N/A')}")
+        else:
+            print_error("O módulo instrucoes_estilisticas_aprimorado não foi importado corretamente.")
+            return False
         
         # Gerar algumas rimas para o tema principal
         if "nucleos" in tema_completo:
             nucleo = tema_completo["nucleos"]
             palavras = nucleo.split()
-            if palavras:
+            if palavras and dicionario is not None:
                 palavra_principal = max(palavras, key=len)
                 rima = dicionario.gerar_rima(palavra_principal)
                 print(f"Rima para '{palavra_principal}': '{rima}'")
+            elif dicionario is None:
+                print_error("O módulo dicionario_rimas_aprimorado não foi importado corretamente.")
         
         print_success("Simulação de integração concluída com sucesso")
         return True
