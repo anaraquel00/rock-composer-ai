@@ -41,8 +41,10 @@ except ImportError:
     import lyricsgenius.types.song  # type: ignore
     import lyricsgenius.types.album  # type: ignore
 
-# Adicione sua API Key do Genius aqui
-GENIUS_API_KEY = "sSa-NaHFpfLFcIbKSTICM0z2GVutBfEWURsiwuogtMjaWH0rmBGHLUP56yPUYXnG"
+import os
+GENIUS_API_KEY = os.getenv("GENIUS_API_KEY")
+if not GENIUS_API_KEY:
+    raise ValueError("A variável de ambiente GENIUS_API_KEY não está definida. Defina antes de rodar o app.")
 
 # Inicializa o cliente Genius
 genius = Genius(GENIUS_API_KEY)
@@ -90,8 +92,12 @@ def buscar_letra(banda: str) -> str:
     """
     try:
         print(f"Buscando letras para a banda: {banda}")
-        song = genius.search_artist(banda, max_songs=1, sort="popularity").songs[0]
-        return f"{song.title}\n\n{song.lyrics}"
+        artist = genius.search_artist(banda, max_songs=1, sort="popularity")
+        if artist is not None and hasattr(artist, "songs") and artist.songs:
+            song = artist.songs[0]
+            return f"{song.title}\n\n{song.lyrics}"
+        else:
+            return "Não foi possível encontrar letras para esta banda."
     except Exception as e:
         print(f"Erro ao buscar letras: {e}")
         return "Não foi possível encontrar letras para esta banda."
@@ -210,30 +216,21 @@ def gerar_estrofe_modernizada(subgenero: str, linhas: int) -> Tuple[List[str], s
     frases = []
     ultimas_rimas = {}
     
-    # Gerar tema completo para contexto consistente
-    tema_base = gerar_tema_completo(subgenero)
-    
     for i in range(linhas):
-        # Determinar qual padrão de rima seguir para esta linha
         padrao_atual = esquema[i % len(esquema)]
         
-        # Gerar linha poética base
-        nova_linha = gerar_linha_poetica(tema_base)
+        # Gere um novo tema para cada linha para garantir variedade
+        tema_linha = gerar_tema_completo(subgenero)
+        nova_linha = gerar_linha_poetica(tema_linha)
         
         # Se este padrão já tem uma rima estabelecida, tentar usar
         if padrao_atual in ultimas_rimas:
             rima_alvo = ultimas_rimas[padrao_atual]
             palavras = nova_linha.split()
-            
             if palavras:
-                # Tentar gerar uma rima para a última palavra
-                ultima_palavra = palavras[-1]
                 rima = gerar_rima(rima_alvo, silabas=3)
-                
-                # Substituir a última palavra pela rima
                 nova_linha = " ".join(palavras[:-1] + [rima])
         
-        # Armazenar a última palavra para futuras rimas do mesmo padrão
         palavras = nova_linha.split()
         if palavras:
             ultimas_rimas[padrao_atual] = palavras[-1]
@@ -241,7 +238,6 @@ def gerar_estrofe_modernizada(subgenero: str, linhas: int) -> Tuple[List[str], s
         frases.append(nova_linha.capitalize())
     
     return frases, esquema
-
 # Função para gerar música completa aprimorada
 def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str]:
     """
@@ -278,7 +274,7 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
         if parte == "intro":
             linhas = 4
         elif parte == "verso":
-            linhas = 8
+            linhas = 4
         elif parte == "refrao":
             linhas = 4
         elif parte == "ponte":
@@ -322,7 +318,7 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
             progressoes_disponiveis = []
             for p in PROGRESSOES[subgenero]:
                 if isinstance(p, dict) and "progressao" in p:
-                    progressoes_disponiveis.append(p["progressao"])
+                    progressoes_disponiveis.append(p.get("progressao"))
             
             if progressoes_disponiveis:
                 acordes += " | ".join([
@@ -346,18 +342,15 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
         bpm_range = instrucoes["caracteristicas_gerais"]["bpm_recomendado"]
         bpm = bpm_range  # Usar o range recomendado diretamente
     
-    # Formatar a letra - Corrigido o problema com f-strings e barras invertidas
-    intro_text = "INTRO:" + "\n" + "\n".join(partes["intro"]) + "\n\n"
-    letra_formatada = intro_text
-    
-    # Adicionar as partes na ordem da estrutura
-    for parte in estrutura:
-        if parte == "intro":
-            continue  # Já adicionado
         
+    # Formatar a letra - Adicionando descrição estilística antes de cada parte
+    letra_formatada = ""
+    for idx, parte in enumerate(estrutura):
         parte_nome = parte.upper()
-        if parte == "verso":
-            parte_nome = "VERSO"
+        if parte == "intro":
+            parte_nome = "INTRO"
+        elif parte == "verso":
+            parte_nome = f"VERSO{idx+1}"
         elif parte == "refrao":
             parte_nome = "REFRÃO"
         elif parte == "ponte":
@@ -366,8 +359,46 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
             parte_nome = "PRÉ-REFRÃO"
         elif parte == "outro":
             parte_nome = "OUTRO"
+
         
-        parte_text = parte_nome + ":" + "\n" + "\n".join(partes[parte]) + "\n\n"
+         # Obter instrução estilística para a parte (se existir)
+        instrucao = ""
+        if (
+            isinstance(instrucoes, dict)
+            and parte in instrucoes
+            and instrucoes[parte]
+        ):
+            valor = instrucoes[parte]
+            if isinstance(valor, list):
+                # Se for lista, pega o primeiro elemento (se for string ou dict)
+                if valor and isinstance(valor[0], dict):
+                    if "descricao" in valor[0]:
+                        instrucao = f"[{parte_nome}: {valor[0]['descricao']}]\n"
+                    elif "padrao" in valor[0]:
+                        instrucao = f"[{parte_nome}: {valor[0]['padrao']}]\n"
+                    else:
+                        instrucao = f"[{parte_nome}]\n"
+                elif valor and isinstance(valor[0], str):
+                    instrucao = f"[{parte_nome}: {valor[0]}]\n"
+                else:
+                    instrucao = f"[{parte_nome}]\n"
+            elif isinstance(valor, dict):
+                # Se for dict, tenta pegar a descrição ou o padrão
+                if "descricao" in valor:
+                    instrucao = f"[{parte_nome}: {valor['descricao']}]\n"
+                elif "padrao" in valor:
+                    instrucao = f"[{parte_nome}: {valor['padrao']}]\n"
+                else:
+                    instrucao = f"[{parte_nome}]\n"
+            elif isinstance(valor, str):
+                instrucao = f"[{parte_nome}: {valor}]\n"
+            else:
+                instrucao = f"[{parte_nome}]\n"
+        else:
+            instrucao = f"[{parte_nome}]\n"
+
+        # Montar bloco da parte
+        parte_text = instrucao + "\n".join(partes[parte]) + "\n\n"
         letra_formatada += parte_text
     
     # Buscar letra de uma música da banda referência
@@ -377,7 +408,7 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
     return banda_ref, acordes, letra_formatada, letra_banda
 
 # Interface Gradio
-with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue")) as app:
+with gr.Blocks() as app:
     gr.Markdown("# 🎸 **Jo Cyborg - IA Compositora**")
     
     with gr.Row():
