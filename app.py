@@ -346,8 +346,9 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
         bpm_range = instrucoes["caracteristicas_gerais"]["bpm_recomendado"]
         bpm = bpm_range  # Usar o range recomendado diretamente
     
-    # Formatar a letra
-    letra_formatada = f"""INTRO:\n{'\n'.join(partes['intro'])}\n\n"""
+    # Formatar a letra - Corrigido o problema com f-strings e barras invertidas
+    intro_text = "INTRO:" + "\n" + "\n".join(partes["intro"]) + "\n\n"
+    letra_formatada = intro_text
     
     # Adicionar as partes na ordem da estrutura
     for parte in estrutura:
@@ -366,7 +367,8 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
         elif parte == "outro":
             parte_nome = "OUTRO"
         
-        letra_formatada += f"{parte_nome}:\n{'\n'.join(partes[parte])}\n\n"
+        parte_text = parte_nome + ":" + "\n" + "\n".join(partes[parte]) + "\n\n"
+        letra_formatada += parte_text
     
     # Buscar letra de uma música da banda referência
     letra_banda = buscar_letra(banda_ref)
