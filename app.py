@@ -279,24 +279,58 @@ def gerar_musica_completa(nome: str, subgenero: str) -> Tuple[str, str, str, str
     letra_banda = buscar_letra(banda_ref)
     return banda_ref, acordes, letra_formatada, letra_banda
 
+def responder_chat(mensagem, estado):
+    """
+    Função para responder ao chat do usuário.
+    O usuário deve digitar o tema desejado, e a IA gera a música.
+    """
+    nome = "Usuário"
+    tema_usuario = mensagem.strip()
+    # Tenta identificar subgênero pelo tema, senão usa padrão
+    subgenero = None
+    for key in BANDAS_ICONICAS.keys():
+        if key.lower() in tema_usuario.lower():
+            subgenero = key
+            break
+    if not subgenero:
+        subgenero = "Metal/Power Metal"
+    banda_ref, acordes, letra, letra_banda = gerar_musica_completa(nome, subgenero)
+    resposta = (
+        f"**Banda Referência:** {banda_ref}\n"
+        f"**Progressão de Acordes:** {acordes}\n\n"
+        f"**Letra:**\n{letra}\n"        
+    )
+    estado.append((mensagem, resposta))
+    return "", estado
+
 with gr.Blocks() as app:
     gr.Markdown("# 🎸 **Jo Cyborg - IA Compositora**")
+    gr.Markdown("Digite no chat o tema ou estilo da música que deseja gerar (ex: 'faça um rock sobre liberdade').")
+    chatbot = gr.Chatbot(label="Jo Cyborg Chat")
+    estado = gr.State([])
+
     with gr.Row():
-        nome = gr.Textbox(label="Seu Nome", value="Raquel")
-        subgenero = gr.Dropdown(
-            label="Estilo Musical",
-            choices=list(BANDAS_ICONICAS.keys()),
-            value="Metal/Power Metal"
+        chat_input = gr.Textbox(
+            show_label=False,
+            placeholder="Digite o tema ou estilo da música...",
+            container=False
         )
-    btn = gr.Button("Criar Música", variant="primary")
-    with gr.Column():
-        referencia = gr.Textbox(label="Banda Referência")
-        acordes = gr.Textbox(label="Progressão de Acordes")
-        letra = gr.Textbox(label="Letra Completa", lines=15)
-        letra_banda = gr.Textbox(label="Letra da Banda Referência", lines=15)
-    btn.click(
-        fn=gerar_musica_completa,
-        inputs=[nome, subgenero],
-        outputs=[referencia, acordes, letra, letra_banda]
+        send_btn = gr.Button("Enviar", variant="primary")
+
+    def atualizar_chat(mensagem, estado):
+        return responder_chat(mensagem, estado)
+
+    send_btn.click(
+        atualizar_chat,
+        inputs=[chat_input, estado],
+        outputs=[chat_input, chatbot]
     )
+    chat_input.submit(
+        atualizar_chat,
+        inputs=[chat_input, estado],
+        outputs=[chat_input, chatbot]
+    )
+
+    gr.Markdown("Projeto no Hugging Face: [Rock Composer AI](https://huggingface.co/spaces/ana99/rock-composer-ai)")
+
     app.launch()

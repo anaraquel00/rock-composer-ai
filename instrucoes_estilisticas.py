@@ -1,10 +1,10 @@
 """
 Biblioteca aprimorada de instruções estilísticas para o Rock Composer AI.
-Inclui instruções mais detalhadas, elementos estruturais adicionais, variações de estilo,
+Inclui instruções detalhadas, elementos estruturais adicionais, variações de estilo,
 referências técnicas e sugestões de andamento para cada gênero musical.
 """
 
-# Constantes para elementos estruturais de música
+# Elementos estruturais expandidos
 ELEMENTOS_ESTRUTURAIS = [
     "intro",
     "verso",
@@ -13,123 +13,173 @@ ELEMENTOS_ESTRUTURAIS = [
     "ponte",
     "solo",
     "interludio",
-    "outro"
+    "bridge",
+    "breakdown",
+    "outro",
+    "coda",
+    "refrão_duplo",
+    "verso_invertido"
 ]
 
-# Constantes para técnicas musicais
+# Técnicas musicais expandidas
 TECNICAS_MUSICAIS = {
-    "palm_muting": "Técnica de abafar as cordas com a palma da mão para criar um som mais percussivo",
-    "tremolo_picking": "Técnica de palhetada rápida e contínua em uma mesma corda",
-    "sweep_picking": "Técnica de palhetada em movimento de 'varredura' através de várias cordas",
-    "tapping": "Técnica de tocar as cordas batendo com os dedos no braço da guitarra",
-    "hammer_on": "Técnica de tocar uma nota e depois pressionar outra corda sem palhetar",
-    "pull_off": "Técnica de puxar o dedo para fora da corda após tocar uma nota",
-    "bend": "Técnica de esticar a corda para alterar a altura da nota",
-    "vibrato": "Técnica de vibrar a corda para criar oscilação na nota",
-    "slide": "Técnica de deslizar o dedo pela corda entre duas notas",
-    "harmonico": "Técnica de tocar notas harmônicas tocando levemente a corda em pontos específicos",
-    "feedback": "Uso controlado da retroalimentação do amplificador para criar efeitos sonoros",
-    "drone": "Nota ou acorde sustentado continuamente como base para outras partes musicais",
-    "ostinato": "Padrão musical que se repete persistentemente",
-    "riff": "Frase musical curta e repetitiva, geralmente na guitarra",
-    "blast_beat": "Padrão de bateria extremamente rápido usado em metal extremo",
-    "d_beat": "Padrão de bateria característico do punk hardcore",
-    "breakdown": "Seção com andamento reduzido e ênfase em riffs pesados",
-    "groove": "Sensação rítmica que induz movimento, baseada na interação entre baixo e bateria"
+    "palm_muting": "Abafar as cordas com a palma da mão para criar um som percussivo",
+    "tremolo_picking": "Palhetada rápida e contínua em uma mesma corda",
+    "sweep_picking": "Palhetada em movimento de 'varredura' por várias cordas",
+    "tapping": "Tocar as cordas batendo com os dedos no braço da guitarra",
+    "hammer_on": "Tocar uma nota e pressionar outra sem palhetar",
+    "pull_off": "Puxar o dedo para fora da corda após tocar uma nota",
+    "bend": "Esticar a corda para alterar a altura da nota",
+    "vibrato": "Vibrar a corda para criar oscilação na nota",
+    "slide": "Deslizar o dedo pela corda entre duas notas",
+    "harmonico": "Tocar notas harmônicas tocando levemente a corda",
+    "feedback": "Uso controlado da retroalimentação do amplificador",
+    "drone": "Nota ou acorde sustentado continuamente",
+    "ostinato": "Padrão musical repetitivo",
+    "riff": "Frase musical curta e repetitiva",
+    "blast_beat": "Bateria extremamente rápida usada em metal extremo",
+    "d_beat": "Padrão de bateria do punk hardcore",
+    "breakdown": "Seção com andamento reduzido e riffs pesados",
+    "groove": "Sensação rítmica baseada em baixo e bateria",
+    "slide_guitar": "Uso do slide para criar glissandos",
+    "harmonized_guitars": "Guitarras tocando melodias em harmonia",
+    "alternate_picking": "Alternância entre palhetadas para cima e para baixo",
+    "legato": "Notas ligadas suavemente",
+    "double_bass": "Uso de dois pedais de bumbo na bateria",
+    "growl_vocal": "Vocal gutural típico do metal extremo",
+    "falsetto": "Uso da voz em registro agudo",
+    "arpeggios": "Notas de acordes tocadas em sequência",
+    "syncopation": "Ritmos deslocados do tempo forte",
+    "polyrhythms": "Sobreposição de diferentes ritmos",
+    "modulation": "Mudança de tonalidade durante a música",
+    "whammy_dive": "Alavanca de trêmolo para efeito de mergulho",
+    "clean_arpeggios": "Arpejos em guitarra limpa",
+    "spoken_word": "Vocais falados",
+    "noise": "Uso criativo de ruídos e microfonia",
+    "crescendo": "Aumento gradual de intensidade",
+    "orchestration": "Arranjos com instrumentos orquestrais",
+    "room_ambience": "Uso do ambiente natural da sala na gravação",
+    "lo_fi_aesthetics": "Estética propositalmente 'suja' ou vintage",
+    "jangly_guitars": "Guitarras com timbre brilhante e percussivo",
+    "melodic_hooks": "Frases melódicas marcantes",
+    "dynamic_contrast": "Contraste forte entre partes suaves e pesadas",
+    "unconventional_song_structures": "Estruturas de música não tradicionais",
+    "delay_textures": "Uso criativo de delay para criar camadas",
+    "ambient_passages": "Seções atmosféricas e etéreas",
+    "extended_compositions": "Músicas longas e com várias seções"
 }
 
-# Constantes para efeitos e processamentos
+# Efeitos expandidos
 EFEITOS = {
     "distortion": "Distorção de sinal, criando harmônicos adicionais",
     "overdrive": "Distorção suave que emula amplificadores valvulados",
     "fuzz": "Distorção extrema com clipping agressivo",
-    "chorus": "Efeito que adiciona uma versão ligeiramente desafinada do sinal original",
-    "flanger": "Efeito de modulação que cria um som 'whooshing'",
-    "phaser": "Efeito que cria picos e vales no espectro de frequência",
-    "reverb": "Simulação de ambientes acústicos e reflexões sonoras",
-    "delay": "Repetições do sinal original em intervalos de tempo",
-    "wah": "Filtro controlado por pedal que altera o ponto de ênfase de frequência",
-    "compression": "Redução da faixa dinâmica do sinal",
-    "eq": "Equalização para moldar o espectro de frequência",
-    "noise_gate": "Redução de ruído quando o sinal está abaixo de um limiar",
+    "chorus": "Adiciona uma versão desafinada do sinal original",
+    "flanger": "Modulação que cria um som 'whooshing'",
+    "phaser": "Cria picos e vales no espectro de frequência",
+    "reverb": "Simulação de ambientes acústicos",
+    "delay": "Repetições do sinal original",
+    "wah": "Filtro controlado por pedal",
+    "compression": "Redução da faixa dinâmica",
+    "eq": "Equalização do espectro de frequência",
+    "noise_gate": "Redução de ruído abaixo de um limiar",
     "octaver": "Adição de notas uma oitava acima ou abaixo",
     "pitch_shifter": "Alteração da altura das notas",
-    "tremolo": "Modulação rápida do volume"
+    "tremolo": "Modulação rápida do volume",
+    "reverse_reverb": "Reverb invertido para efeito etéreo",
+    "bitcrusher": "Redução da resolução do áudio para efeito digital",
+    "auto_pan": "Movimento automático do som entre canais",
+    "stereo_widening": "Aumenta a percepção de largura estéreo"
 }
 
 # Instruções estilísticas expandidas para cada subgênero musical
 INSTRUCOES_ESTILISTICAS = {
     "Metal/Death Metal": {
         "caracteristicas_gerais": {
-            "descricao": "Subgênero extremo do metal caracterizado por vocais guturais, guitarras pesadas com afinação baixa, blast beats e temáticas sombrias",
+            "descricao": "Metal extremo com vocais guturais, guitarras pesadas, blast beats e temas sombrios",
             "bpm_recomendado": "160-240 BPM",
             "afinacao_recomendada": "Drop C, Drop B ou mais grave",
-            "artistas_referencia": ["Cannibal Corpse", "Death", "Morbid Angel", "Obituary", "Suffocation"],
-            "tecnicas_comuns": ["tremolo_picking", "palm_muting", "blast_beat", "growl_vocal", "sweep_picking"]
+            "artistas_referencia": ["Cannibal Corpse", "Death", "Morbid Angel", "Obituary", "Suffocation", "Behemoth", "Nile"],
+            "tecnicas_comuns": ["tremolo_picking", "palm_muting", "blast_beat", "growl_vocal", "sweep_picking", "alternate_picking", "modulation"]
         },
         "intro": {
             "padrao": "Guitarra pesada em drop D, bateria rápida e agressiva",
             "variacao_1": "Riff dissonante com palm muting e acentos irregulares, blast beats na bateria",
             "variacao_2": "Introdução atmosférica com guitarra limpa e efeitos, seguida de explosão com riff pesado",
             "variacao_3": "Sample de filme de horror ou diálogo sombrio, seguido por entrada abrupta da banda completa",
-            "tecnicas": ["palm_muting", "tremolo_picking", "blast_beat"],
-            "efeitos_recomendados": ["distortion", "noise_gate", "eq"]
+            "variacao_4": "Intro instrumental com arpejos limpos e delay reverso",
+            "tecnicas": ["palm_muting", "tremolo_picking", "blast_beat", "reverse_reverb"],
+            "efeitos_recomendados": ["distortion", "noise_gate", "eq", "reverse_reverb"]
         },
         "verso": {
             "padrao": "Riffs rápidos, vocais guturais, baixo pulsante",
             "variacao_1": "Riffs em tremolo picking com harmonia dissonante, vocais graves e guturais",
             "variacao_2": "Riffs técnicos com mudanças de compasso, vocais alternando entre gutural grave e agudo",
             "variacao_3": "Groove pesado com acentos sincopados, vocais ritmicamente precisos",
-            "tecnicas": ["tremolo_picking", "palm_muting", "growl_vocal"],
-            "efeitos_recomendados": ["distortion", "compression", "eq"]
+            "variacao_4": "Riffs cromáticos com blast beats e baixo distorcido",
+            "tecnicas": ["tremolo_picking", "palm_muting", "growl_vocal", "syncopation"],
+            "efeitos_recomendados": ["distortion", "compression", "eq", "bitcrusher"]
         },
         "pre_refrao": {
             "padrao": "Intensificação rítmica, aumento de tensão harmônica",
             "variacao_1": "Riff ascendente com aumento de intensidade, double bass acelerando",
             "variacao_2": "Breakdown com palm muting pesado, preparando para explosão",
             "variacao_3": "Pausa dramática ou diminuição súbita de intensidade antes do refrão",
-            "tecnicas": ["palm_muting", "double_bass", "power_chords"],
-            "efeitos_recomendados": ["distortion", "compression"]
+            "variacao_4": "Seção instrumental com polirritmia e efeitos de delay",
+            "tecnicas": ["palm_muting", "double_bass", "power_chords", "polyrhythms"],
+            "efeitos_recomendados": ["distortion", "compression", "delay"]
         },
         "refrao": {
             "padrao": "Melodia épica, harmonias em quintas, blast beats",
             "variacao_1": "Riff memorável com harmonia em quintas, blast beats alternando com groove",
             "variacao_2": "Melodia sombria sobre base rítmica intensa, vocais em camadas",
             "variacao_3": "Riff técnico com mudanças de tempo, vocais em padrão de pergunta e resposta",
-            "tecnicas": ["blast_beat", "power_chords", "layered_vocals"],
-            "efeitos_recomendados": ["distortion", "reverb", "delay"]
+            "variacao_4": "Refrão com gang vocals e riffs sincopados",
+            "tecnicas": ["blast_beat", "power_chords", "layered_vocals", "gang_vocals"],
+            "efeitos_recomendados": ["distortion", "reverb", "delay", "stereo_widening"]
         },
         "ponte": {
             "padrao": "Solo técnico, mudanças de tempo, atmosfera sombria",
             "variacao_1": "Solo virtuoso com sweep picking e tapping, sobre base rítmica complexa",
             "variacao_2": "Breakdown pesado com half-time feel, criando contraste com seções rápidas",
             "variacao_3": "Seção atmosférica com guitarras ambientes e percussão minimalista",
-            "tecnicas": ["sweep_picking", "tapping", "time_signature_changes"],
-            "efeitos_recomendados": ["delay", "reverb", "wah"]
+            "variacao_4": "Ponte instrumental com polirritmia e efeitos de phaser",
+            "tecnicas": ["sweep_picking", "tapping", "time_signature_changes", "polyrhythms"],
+            "efeitos_recomendados": ["delay", "reverb", "wah", "phaser"]
         },
         "solo": {
             "padrao": "Solo técnico e veloz com escalas menores e frígias",
             "variacao_1": "Solo melódico com bends expressivos e vibrato intenso",
             "variacao_2": "Solo atonal com técnicas estendidas e dissonâncias",
             "variacao_3": "Solo baseado em arpejos com sweep picking e tapping",
-            "tecnicas": ["sweep_picking", "alternate_picking", "tapping", "whammy_dive"],
-            "efeitos_recomendados": ["delay", "wah", "reverb"]
+            "variacao_4": "Solo com uso de whammy bar e efeitos de pitch shifter",
+            "tecnicas": ["sweep_picking", "alternate_picking", "tapping", "whammy_dive", "pitch_shifter"],
+            "efeitos_recomendados": ["delay", "wah", "reverb", "pitch_shifter"]
         },
         "interludio": {
             "padrao": "Seção instrumental com experimentação rítmica",
             "variacao_1": "Passagem atmosférica com guitarras limpas e efeitos",
             "variacao_2": "Riff complexo em unísono entre guitarra e baixo",
             "variacao_3": "Seção percussiva com ênfase na bateria e baixo",
-            "tecnicas": ["clean_arpeggios", "harmonics", "polyrhythms"],
-            "efeitos_recomendados": ["reverb", "delay", "chorus"]
+            "variacao_4": "Interlúdio com drones e texturas de feedback",
+            "tecnicas": ["clean_arpeggios", "harmonics", "polyrhythms", "drone", "feedback"],
+            "efeitos_recomendados": ["reverb", "delay", "chorus", "feedback"]
+        },
+        "breakdown": {
+            "padrao": "Ritmo desacelerado, riffs pesados, vocais agressivos",
+            "variacao_1": "Breakdown com riffs sincopados e bateria half-time",
+            "variacao_2": "Seção instrumental com baixo distorcido e efeitos de noise",
+            "tecnicas": ["breakdown", "syncopation", "noise"],
+            "efeitos_recomendados": ["distortion", "noise_gate", "compression"]
         },
         "outro": {
             "padrao": "Repetição intensificada do riff principal com final abrupto",
             "variacao_1": "Desaceleração gradual com aumento de dissonância",
             "variacao_2": "Fade out com feedback e ruído controlado",
             "variacao_3": "Final explosivo com blast beats e grito prolongado",
-            "tecnicas": ["feedback", "noise", "blast_beat"],
-            "efeitos_recomendados": ["distortion", "noise_gate", "reverb"]
+            "variacao_4": "Coda instrumental com riffs alternados",
+            "tecnicas": ["feedback", "noise", "blast_beat", "coda"],
+            "efeitos_recomendados": ["distortion", "noise_gate", "reverb", "feedback"]
         }
     },
     
@@ -146,6 +196,7 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Introdução orquestral com sintetizadores épicos e coral",
             "variacao_2": "Riff melódico rápido em oitavas ou terças harmonizadas",
             "variacao_3": "Arpejo limpo seguido de entrada explosiva da banda completa",
+            "variacao_4": "Intro com guitarra limpa e efeitos de chorus",
             "tecnicas": ["alternate_picking", "harmonized_guitars", "double_bass"],
             "efeitos_recomendados": ["reverb", "chorus", "delay"]
         },
@@ -154,7 +205,8 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Riffs rápidos com pedal tone, vocais narrativos e melódicos",
             "variacao_2": "Riffs em palm muting com acentos em notas melódicas, vocais dinâmicos",
             "variacao_3": "Riffs baseados em escalas maiores com baixo seguindo a harmonia",
-            "tecnicas": ["alternate_picking", "palm_muting", "high_register_vocals"],
+            "variacao_4": "Verso com mudanças de tempo e vocais em falsete",
+            "tecnicas": ["alternate_picking", "palm_muting", "high_register_vocals", "falsetto"],
             "efeitos_recomendados": ["overdrive", "compression", "eq"]
         },
         "pre_refrao": {
@@ -162,6 +214,7 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Progressão de acordes ascendente com bateria intensificando",
             "variacao_2": "Riff em pedal tone com melodia vocal crescente",
             "variacao_3": "Pausa dramática seguida de fill de bateria para o refrão",
+            "variacao_4": "Seção com vocais em crescendo e guitarra limpa",
             "tecnicas": ["pedal_tone", "crescendo", "vocal_build"],
             "efeitos_recomendados": ["overdrive", "compression"]
         },
@@ -170,7 +223,8 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Melodia vocal épica sobre acordes maiores, coros em camadas",
             "variacao_2": "Refrão em tempo dobrado com harmonias vocais em terças e quintas",
             "variacao_3": "Melodia ascendente com resolução épica, double bass constante",
-            "tecnicas": ["vocal_harmonies", "double_bass", "power_chords"],
+            "variacao_4": "Refrão com riffs de guitarra em harmonia",
+            "tecnicas": ["vocal_harmonies", "double_bass", "power_chords", "harmonized_guitars"],
             "efeitos_recomendados": ["reverb", "chorus", "delay"]
         },
         "ponte": {
@@ -178,7 +232,8 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Modulação para tonalidade maior com solo técnico",
             "variacao_2": "Seção orquestral com guitarras em segundo plano",
             "variacao_3": "Breakdown com half-time feel e vocais épicos",
-            "tecnicas": ["sweep_picking", "tapping", "modulation"],
+            "variacao_4": "Ponte com solos alternados de guitarra e teclado",
+            "tecnicas": ["sweep_picking", "tapping", "modulation", "harmonized_guitars"],
             "efeitos_recomendados": ["delay", "reverb", "wah"]
         },
         "solo": {
@@ -186,6 +241,7 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Solo melódico com frases cantáveis e vibrato expressivo",
             "variacao_2": "Solo técnico ultra-rápido com alternate picking e sweep",
             "variacao_3": "Solo neoclássico com arpejos e sequências harmônicas",
+            "variacao_4": "Solo com uso de legato e tapping",
             "tecnicas": ["alternate_picking", "sweep_picking", "tapping", "legato"],
             "efeitos_recomendados": ["delay", "reverb", "wah"]
         },
@@ -194,6 +250,7 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Passagem acústica com violões e flautas",
             "variacao_2": "Duelo entre guitarra e teclado",
             "variacao_3": "Seção orquestral com coral e percussão épica",
+            "variacao_4": "Interlúdio com texturas eletrônicas e guitarra limpa",
             "tecnicas": ["harmonized_guitars", "keyboard_solo", "acoustic_arpeggios"],
             "efeitos_recomendados": ["reverb", "chorus", "delay"]
         },
@@ -202,6 +259,7 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Coda instrumental com tema principal em arranjo orquestral",
             "variacao_2": "Aceleração gradual com final explosivo",
             "variacao_3": "Fade out com coral e orquestração",
+            "variacao_4": "Repetição do riff principal com variações melódicas",
             "tecnicas": ["crescendo", "harmonized_guitars", "orchestration"],
             "efeitos_recomendados": ["reverb", "delay", "chorus"]
         }
@@ -221,6 +279,7 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Feedback seguido de explosão com power chords",
             "variacao_2": "Contagem rápida e entrada imediata da banda",
             "variacao_3": "Riff simples e direto com bateria em D-beat",
+            "variacao_4": "Intro com batida de tambor e guitarra limpa",
             "tecnicas": ["power_chords", "downpicking", "d_beat"],
             "efeitos_recomendados": ["distortion", "overdrive"]
         },
@@ -229,7 +288,8 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Power chords rápidos em downpicking, vocais agressivos",
             "variacao_2": "Riff com notas individuais, vocais ritmicamente marcados",
             "variacao_3": "Progressão de acordes simples com baixo seguindo a raiz",
-            "tecnicas": ["power_chords", "downpicking", "shouted_vocals"],
+            "variacao_4": "Verso com vocais em falsete e riffs em palm muting",
+            "tecnicas": ["power_chords", "downpicking", "shouted_vocals", "falsetto"],
             "efeitos_recomendados": ["distortion", "overdrive"]
         },
         "pre_refrao": {
@@ -237,6 +297,7 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Pausa momentânea seguida de fill de bateria",
             "variacao_2": "Mudança para ritmo mais marcado antes do refrão",
             "variacao_3": "Acentuação nos contratempos criando tensão",
+            "variacao_4": "Seção com vocais gritados e guitarra limpa",
             "tecnicas": ["syncopation", "drum_fills", "power_chords"],
             "efeitos_recomendados": ["distortion", "overdrive"]
         },
@@ -245,6 +306,7 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Power chords simples com vocais em grupo (gang vocals)",
             "variacao_2": "Melodia vocal simples e direta sobre base energética",
             "variacao_3": "Refrão com mudança de andamento (mais rápido ou mais lento)",
+            "variacao_4": "Refrão com riffs de guitarra em uníssono",
             "tecnicas": ["power_chords", "gang_vocals", "d_beat"],
             "efeitos_recomendados": ["distortion", "overdrive"]
         },
@@ -253,7 +315,8 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Breakdown com half-time feel e vocais gritados",
             "variacao_2": "Seção com apenas baixo e bateria, criando tensão",
             "variacao_3": "Mudança para ritmo mais lento e pesado",
-            "tecnicas": ["breakdown", "half_time", "feedback"],
+            "variacao_4": "Ponte com vocais em falsete e guitarra limpa",
+            "tecnicas": ["breakdown", "half_time", "feedback", "falsetto"],
             "efeitos_recomendados": ["distortion", "feedback"]
         },
         "solo": {
@@ -261,7 +324,8 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Notas rápidas e caóticas sem estrutura aparente",
             "variacao_2": "Feedback controlado e manipulação de ruído",
             "variacao_3": "Ausência de solo (característica comum no punk)",
-            "tecnicas": ["bend", "feedback", "noise"],
+            "variacao_4": "Solo com uso de harmônicos e efeitos de flanger",
+            "tecnicas": ["bend", "feedback", "noise", "harmonics"],
             "efeitos_recomendados": ["distortion", "feedback", "wah"]
         },
         "interludio": {
@@ -269,6 +333,7 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Apenas bateria com vocais falados/gritados",
             "variacao_2": "Riff alternativo com mudança de dinâmica",
             "variacao_3": "Feedback e ruído experimental",
+            "variacao_4": "Interlúdio com batida de tambor e guitarra limpa",
             "tecnicas": ["bass_riff", "spoken_word", "noise"],
             "efeitos_recomendados": ["distortion", "overdrive", "feedback"]
         },
@@ -277,7 +342,8 @@ INSTRUCOES_ESTILISTICAS = {
             "variacao_1": "Desaceleração com final caótico",
             "variacao_2": "Repetição do refrão com intensificação gradual",
             "variacao_3": "Feedback prolongado após último acorde",
-            "tecnicas": ["feedback", "noise", "drum_fill"],
+            "variacao_4": "Coda com riffs alternados e bateria em destaque",
+            "tecnicas": ["feedback", "noise", "drum_fill", "coda"],
             "efeitos_recomendados": ["distortion", "feedback"]
         }
     },
@@ -343,89 +409,42 @@ INSTRUCOES_ESTILISTICAS = {
 def obter_instrucoes_estilisticas(genero, elemento=None):
     """
     Retorna instruções estilísticas para um gênero musical específico.
-    
-    Args:
-        genero (str): O gênero musical.
-        elemento (str, optional): Elemento estrutural específico (intro, verso, refrao, etc).
-        
-    Returns:
-        dict: Dicionário com instruções estilísticas.
     """
     if genero not in INSTRUCOES_ESTILISTICAS:
         return {}
-    
     if elemento and elemento in INSTRUCOES_ESTILISTICAS[genero]:
         return INSTRUCOES_ESTILISTICAS[genero][elemento]
-    
     return INSTRUCOES_ESTILISTICAS[genero]
 
-# Função para obter características gerais de um gênero
 def obter_caracteristicas_genero(genero):
     """
     Retorna características gerais de um gênero musical.
-    
-    Args:
-        genero (str): O gênero musical.
-        
-    Returns:
-        dict: Dicionário com características gerais do gênero.
     """
     if genero in INSTRUCOES_ESTILISTICAS and "caracteristicas_gerais" in INSTRUCOES_ESTILISTICAS[genero]:
         return INSTRUCOES_ESTILISTICAS[genero]["caracteristicas_gerais"]
-    
     return {}
 
-# Função para obter informações sobre técnicas musicais
 def obter_info_tecnica(tecnica):
     """
     Retorna informações sobre uma técnica musical específica.
-    
-    Args:
-        tecnica (str): Nome da técnica musical.
-        
-    Returns:
-        str: Descrição da técnica musical.
     """
-    if tecnica in TECNICAS_MUSICAIS:
-        return TECNICAS_MUSICAIS[tecnica]
-    
-    return "Técnica não encontrada na base de dados."
+    return TECNICAS_MUSICAIS.get(tecnica, "Técnica não encontrada na base de dados.")
 
-# Função para obter informações sobre efeitos
 def obter_info_efeito(efeito):
     """
     Retorna informações sobre um efeito específico.
-    
-    Args:
-        efeito (str): Nome do efeito.
-        
-    Returns:
-        str: Descrição do efeito.
     """
-    if efeito in EFEITOS:
-        return EFEITOS[efeito]
-    
-    return "Efeito não encontrado na base de dados."
+    return EFEITOS.get(efeito, "Efeito não encontrado na base de dados.")
 
-# Função para gerar estrutura de música completa
 def gerar_estrutura_musica(genero, complexidade=1):
     """
     Gera uma estrutura musical completa para um gênero específico.
-    
-    Args:
-        genero (str): O gênero musical.
-        complexidade (int): Nível de complexidade da estrutura (1-3).
-        
-    Returns:
-        list: Lista ordenada de elementos estruturais para a música.
     """
     estruturas = {
         1: ["intro", "verso", "refrao", "verso", "refrao", "outro"],
-        2: ["intro", "verso", "refrao", "verso", "refrao", "ponte", "refrao", "outro"],
-        3: ["intro", "verso", "pre_refrao", "refrao", "verso", "pre_refrao", "refrao", "ponte", "solo", "refrao", "outro"]
+        2: ["intro", "verso", "pre_refrao", "refrao", "verso", "pre_refrao", "refrao", "ponte", "refrao", "outro"],
+        3: ["intro", "verso", "pre_refrao", "refrao", "verso_invertido", "pre_refrao", "refrao_duplo", "ponte", "solo", "interludio", "breakdown", "refrao", "coda"]
     }
-    
     if complexidade not in estruturas:
         complexidade = 1
-    
     return estruturas[complexidade]
