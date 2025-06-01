@@ -34,7 +34,6 @@ BANDAS_ICONICAS = {
     "Shoegaze": ["My Bloody Valentine", "Slowdive", "Ride"],
     "Dream Rock": ["Beach House", "Mazzy Star", "Cocteau Twins"],
     "Alternative Rock": ["Radiohead", "Nirvana", "The Smashing Pumpkins"],
-    "Indie Rock": ["Arctic Monkeys", "Vampire Weekend", "Tame Impala"],
     "Post-Rock": ["Explosions in the Sky", "Godspeed You! Black Emperor", "Sigur Rós"]
 }
 
@@ -45,7 +44,6 @@ ACORDES = {
     "Shoegaze": ["Cmaj7", "Gmaj7", "Dmaj7", "Amin7", "Emin7"],
     "Dream Rock": ["Cmaj", "Gmaj", "Dmaj", "Amin", "Emin"],
     "Alternative Rock": ["Cmaj", "Gmaj", "Dmaj", "Amin", "Emin"],
-    "Indie Rock": ["Cmaj", "Gmaj", "Dmaj", "Amin", "Emin"],
     "Post-Rock": ["Cmaj", "Gmaj", "Dmaj", "Amin", "Emin"]
 }
 

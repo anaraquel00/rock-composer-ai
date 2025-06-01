@@ -381,18 +381,7 @@ INSTRUCOES_ESTILISTICAS = {
         },
         # Elementos estruturais omitidos para brevidade
     },
-    
-    "Indie Rock": {
-        "caracteristicas_gerais": {
-            "descricao": "Gênero associado originalmente a gravadoras independentes, caracterizado por abordagens DIY e experimentação dentro de estruturas pop/rock",
-            "bpm_recomendado": "90-130 BPM",
-            "afinacao_recomendada": "Standard E",
-            "artistas_referencia": ["Arctic Monkeys", "Vampire Weekend", "Tame Impala", "The Strokes", "Arcade Fire"],
-            "tecnicas_comuns": ["jangly_guitars", "lo_fi_aesthetics", "vintage_tones", "room_ambience", "quirky_arrangements"]
-        },
-        # Elementos estruturais omitidos para brevidade
-    },
-    
+          
     "Post-Rock": {
         "caracteristicas_gerais": {
             "descricao": "Gênero que utiliza instrumentação de rock para criar texturas e estruturas não tradicionais, frequentemente instrumentais e com dinâmicas crescentes",

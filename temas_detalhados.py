@@ -397,70 +397,7 @@ TEMAS_DETALHADOS = {
             "hiperconectividade solitária", "cultura de cancelamento", "autoimagem versus realidade", "busca por significado"
         ]
     },
-    
-    "Indie Rock": {
-        "nucleos": [
-            "memórias vivas", "sonhos sem nexo", "natureza morta", "silêncio abafado", 
-            "histórias esquecidas", "caminhos solitários", "reflexões perdidas", "ecos do coração",
-            "detalhes cotidianos", "momentos efêmeros", "conexões frágeis", "beleza no comum",
-            "observações sutis", "pensamentos divagantes", "identidade em construção", "autenticidade buscada"
-        ],
-        "acoes": [
-            "flutua alto", "desvanece devagar", "abraça meus contos", "perde consciência", 
-            "dança na melancolia", "se perde no tempo", "canta para o vazio", "procura sentido",
-            "observa detalhes", "coleciona momentos", "escreve memórias", "fotografa instantes",
-            "desenha sentimentos", "compartilha segredos", "cria conexões", "preserva lembranças"
-        ],
-        "elementos": [
-            "eterno viver", "infinito calmo", "transcendente luar", "etéreo em cruz", 
-            "sombras do passado", "luz do amanhecer", "vento da solidão", "chuva de emoções",
-            "ruas molhadas", "janelas embaçadas", "folhas de outono", "café da manhã",
-            "livros empilhados", "bicicleta enferrujada", "vinil tocando", "polaroids espalhadas"
-        ],
-        "cenarios": [
-            "café da esquina", "livraria independente", "apartamento pequeno", "parque no outono", 
-            "festa em casa", "viagem de carro", "show intimista", "festival de verão",
-            "biblioteca pública", "loja de discos", "galeria de arte", "rua arborizada",
-            "terraço ao pôr do sol", "estúdio caseiro", "feira de rua", "praia deserta"
-        ],
-        "personagens": [
-            "artista independente", "estudante de artes", "barista poeta", "músico local", 
-            "fotógrafo amador", "escritor não publicado", "viajante solitário", "amigo distante",
-            "ex-amante", "vizinho misterioso", "professor excêntrico", "ativista discreto",
-            "designer freelancer", "cinéfilo obsessivo", "colecionador de vinis", "barman filósofo"
-        ],
-        "conflitos": [
-            "autenticidade versus reconhecimento", "arte versus sustento", "conexão versus independência", "passado versus presente", 
-            "sonhos versus realidade", "intimidade versus distância", "expressão versus aceitação", "originalidade versus influência",
-            "ambição versus contentamento", "nostalgia versus presença", "comunidade versus individualidade", "compromisso versus liberdade",
-            "criatividade versus rotina", "vulnerabilidade versus proteção", "simplicidade versus complexidade", "local versus global"
-        ],
-        "emocoes": [
-            "nostalgia agridoce", "melancolia confortável", "alegria contida", "tristeza poética", 
-            "esperança cautelosa", "curiosidade contemplativa", "solidão acolhedora", "amor ambivalente",
-            "satisfação momentânea", "inquietação criativa", "tédio inspirador", "admiração silenciosa",
-            "vulnerabilidade autêntica", "empatia distante", "contentamento imperfeito", "entusiasmo moderado"
-        ],
-        "simbolos": [
-            "câmera analógica", "disco de vinil", "máquina de escrever", "bicicleta vintage", 
-            "caderno moleskine", "xícara de café", "plantas de apartamento", "roupas de brechó",
-            "fita cassete", "cartão postal", "pôster de filme", "livro usado",
-            "óculos de armação grossa", "mochila desgastada", "cachecol artesanal", "chapéu de feltro"
-        ],
-        "periodos_historicos": [
-            "anos 2000", "era blog", "cultura hipster", "ressurgimento analógico", 
-            "era pós-9/11", "recessão econômica", "primórdios das redes sociais", "era dos iPods",
-            "boom das gravadoras independentes", "cultura DIY", "festivais independentes", "era Pitchfork",
-            "cena lo-fi", "movimento new sincerity", "cultura maker", "renascimento artesanal"
-        ],
-        "temas_contemporaneos": [
-            "autenticidade na era digital", "comunidades nicho", "cultura maker", "slow living", 
-            "consumo consciente", "localismo", "nostalgia prematura", "curadoria pessoal",
-            "identidade através do gosto", "economia criativa", "gentrificação", "vida urbana sustentável",
-            "minimalismo", "desconexão digital", "trabalho significativo", "intimidade genuína"
-        ]
-    },
-    
+           
     "Post-Rock": {
         "nucleos": [
             "mistério do tempo", "tranquilidade duvidada", "reflexão às avessas", "sonhos loucos", 
